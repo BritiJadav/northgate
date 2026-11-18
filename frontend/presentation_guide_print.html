@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Northgate Bank - Virtusa Module 8 Presentation Guide</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.5;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .header-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-amber {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+    .badge-emerald {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .badge-purple {
+      background: #ede9fe;
+      color: #5b21b6;
+      border: 1px solid #ddd6fe;
+    }
+    h1 {
+      font-size: 20pt;
+      font-weight: 800;
+      margin: 10px 0 6px 0;
+      color: #ffffff;
+    }
+    h2 {
+      font-size: 14pt;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+    .step-box {
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+    }
+    .step-box.highlight {
+      border-left: 4px solid #2563eb;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .action-badge {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #1e40af;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    blockquote {
+      margin: 8px 0;
+      padding: 8px 12px;
+      background: #f1f5f9;
+      border-left: 3px solid #3b82f6;
+      color: #334155;
+      font-size: 10pt;
+      font-style: italic;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+      margin-top: 8px;
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 7px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 8pt;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+    .kpi-card {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .kpi-val {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #0f172a;
+      font-family: monospace;
+    }
+    .kpi-lbl {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .pro-tip {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+    .footer {
+      text-align: center;
+      font-size: 8pt;
+      color: #94a3b8;
+      margin-top: 24px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= COVER / HEADER ================= -->
+  <div class="header-box">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span class="badge badge-amber">Virtusa Lead FDE Programme &bull; Module 8</span>
+      <span style="font-size: 9pt; color: #94a3b8; font-family: monospace;">TUE 17 NOV 2026 &bull; WAR ROOM</span>
+    </div>
+    <h1>Northgate Corporate Bank</h1>
+    <div style="font-size: 12pt; color: #cbd5e1; font-weight: 600;">
+      Multi-Stakeholder KYC Agent Gateway &bull; Presentation Guide
+    </div>
+    <div style="margin-top: 10px; font-size: 9.5pt; color: #94a3b8;">
+      Theme: <em>Decide, communicate, unblock &mdash; in that order &mdash; under pressure.</em> &bull; Target: <strong>18 &rarr; 9 Working Days to Decision</strong>
+    </div>
+  </div>
+
+  <!-- Mission Numbers Banner (Slide 4) -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #b45309;">18 &rarr; 9</div>
+      <div class="kpi-lbl">Working Days Target</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #1d4ed8;">7</div>
+      <div class="kpi-lbl">Functions Aligned</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #047857;">8</div>
+      <div class="kpi-lbl">War Room Injects</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-val" style="color: #6b21a8;">0</div>
+      <div class="kpi-lbl">Lines of Code Today</div>
+    </div>
+  </div>
+
+  <h2>1. Executive Summary & Architecture Blueprint</h2>
+  <p>
+    Following guide feedback, the Northgate Enterprise KYC Agent Gateway was built on a single unified data foundation (Case <code>NCB-CASE-7891</code>, immutable audit traces, model cost telemetry, and human sign-offs) that renders <strong>4 dedicated stakeholder dashboards</strong> and an interactive <strong>War Room Hub</strong>:
+  </p>
+  <ul>
+    <li><strong>👔 CEO / Business Lens:</strong> Focuses on the 18 &rarr; 9 outcome story, 48.9% cycle time drop, £4.8M protected revenue, and $0.00311 AI cost per file.</li>
+    <li><strong>📋 Analyst Workbench Lens:</strong> Operational case review, automated UBO hierarchy mapping, and the <em>What to check today</em> alert on Bank Format C anomalies.</li>
+    <li><strong>🛡️ CRO & Risk Governance Lens:</strong> Strict enforcement of <em>"A Person Still Decides" (ADR-001)</em>, zero autonomous credit liability, and policy blocks against auto-approvals.</li>
+    <li><strong>⚙️ Enterprise Architecture & CISO Lens:</strong> The One-Way Doors vs Two-Way Doors matrix, multi-cloud model gateway quotas, and 100% synthetic data masking in dev.</li>
+    <li><strong>⚡ Pillar 5: Delivery Leadership War Room:</strong> Interactive Decision Log covering all 8 injects across 2 rounds, plus the <em>Same News, Three Audiences</em> dynamic translator.</li>
+  </ul>
+
+  <!-- ================= SCRIPT WALKTHROUGH ================= -->
+  <h2>2. Step-by-Step Presentation Script for Your Guide</h2>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 1 &bull; 60 Seconds</span>
+    <h3>Opening Hook: The Business Problem & The 18 &rarr; 9 Target</h3>
+    <p><strong>Action:</strong> Open browser to <code>http://127.0.0.1:8080/static/index.html</code>. Point to the top bar: <em>"Same Data &bull; 4 Stakeholder Lenses"</em>.</p>
+    <blockquote>
+      "Good morning. Today, institutional corporate onboarding takes 18 working days to a decision against a target of 9 days. Because of this delay, 23% of institutional clients drop off, and files bounce back and forth 2 to 3 times.<br><br>
+      In Module 8: Delivery Leadership, we learned that leadership is about: <strong>Decide, communicate, unblock &mdash; in that order</strong>. Following your guidance, we took the <strong>exact same underlying banking data and telemetry</strong> and built dedicated Agentic Dashboards tailored to each distinct stakeholder: CEO, Analyst, CRO, and Architecture. Let me demonstrate how each stakeholder experiences this system."
+    </blockquote>
+  </div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 2 &bull; 90 Seconds</span>
+    <h3>CEO / Business Leadership View (Slide 5 & 11)</h3>
+    <p><strong>Action:</strong> Click the top blue button: <strong>👔 CEO / Business</strong>.</p>
+    <p><strong>Point to:</strong> Current velocity (9.2 days), 142 cases/week (+115% capacity), 4.2% drop-off rate, and Apex Meridian recovery.</p>
+    <blockquote>
+      "Slide 5 states: <em>'Business needs the 18 &rarr; 9 story and no surprises.'</em> Slide 11 adds: <em>'What the CEO needs to hear: The effect on the outcome, what we're doing, and the decision we need.'</em><br><br>
+      From the CEO lens, executive leadership sees immediate ROI: cycle time has dropped from 18 to 9.2 days (48.9% faster), client drop-offs fell to 4.2% (saving £4.8M in annualized institutional facilities), and our AI cost per file is $0.00311 compared to $145 for manual review. Overdue cases like Apex Meridian Shipping Ltd—which sat stuck for 32 days manually—are resolved in 48 hours."
+    </blockquote>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 3 &bull; 90 Seconds</span>
+    <h3>KYC Analyst Operational View (Elena Gomez &bull; Slide 11)</h3>
+    <p><strong>Action:</strong> Click the top button: <strong>📋 Analyst Workbench</strong>. Click <strong>"🏢 Identify Beneficial Owners (UBO)"</strong>.</p>
+    <p><strong>Point to:</strong> Yellow alert box: <em>"⚠️ Bank Format C Anomaly: 35% manual edits observed"</em>, and the extracted UBO cards.</p>
+    <blockquote>
+      "Slide 11 teaches that analysts don't need high-level strategy; <em>'Analysts need to hear: which format is affected, what to check today, and how to flag it.'</em><br><br>
+      Right at the top of the workbench, Elena Gomez receives an automated operational alert regarding Bank Format C statements, where a 35% table shift was observed, instructing her to verify turnover figures.<br><br>
+      When she clicks 'Identify Beneficial Owners', the gateway parses the cross-border holding chain across the UK, Netherlands, Singapore, and Guernsey in 15 seconds with verified citations. She then clicks 'Sign 1: Sign Facts' to confirm the data under bank protocol."
+    </blockquote>
+  </div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 4 &bull; 90 Seconds</span>
+    <h3>CRO & Risk Governance View (David Ross &bull; Slide 5 & 11)</h3>
+    <p><strong>Action:</strong> Click the top button: <strong>🛡️ CRO & Risk (Human Decides)</strong>.</p>
+    <p><strong>Point to:</strong> <em>"A Person Still Decides" (ADR-001)</em>, Policy Boundary Block on Auto-Approval &lt;₹5L, and 100% Critic pass rate.</p>
+    <blockquote>
+      "Slide 11 defines what the Chief Risk Officer needs to hear: <em>'The risk, the control that caught it, and that a person still decides.'</em><br><br>
+      Under Northgate ADR-001, AI is strictly prohibited from executing autonomous credit decisions. AI generates unsealed draft recommendations only; statutory accountability under SMCR remains with certified bank officers.<br><br>
+      Here, we show the controls that caught operational incidents: When executive scope pressure asked if AI could auto-approve loans under ₹5 Lakh (Inject 2 from class), the gateway policy engine <strong>actively blocked it</strong>. Our independent Second-Line Critic agent verifies 100% of claims against raw source documents."
+    </blockquote>
+  </div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 5 &bull; 60 Seconds</span>
+    <h3>Enterprise Architecture & The Reversibility Matrix</h3>
+    <p><strong>Action:</strong> Click the top button: <strong>⚙️ Architecture & Quotas</strong>.</p>
+    <p><strong>Point to:</strong> Two-Way Doors (6 Decisions) vs One-Way Doors (2 Decisions) columns, and Azure 40% quota failover.</p>
+    <blockquote>
+      "Slide 2 and Slide 5 emphasize: <em>'Architecture needs decisions recorded, one-way doors flagged. Security needs data flows, consent, and least privilege.'</em><br><br>
+      We explicitly categorize architectural decisions by reversibility:<br>
+      &bull; <strong>Two-Way Doors:</strong> Multi-cloud failover from Azure OpenAI to Gemini, OCR dual-intake while legal clears Account Aggregator consent, and prompt temperature tuning.<br>
+      &bull; <strong>One-Way Doors:</strong> Flagged ADR-001 Mandatory Human Sign-Off and our Dev Synthetic Data Mandate. Once you compromise on autonomous lending or leak real customer statements into dev (Inject 6), regulatory liability is irreversible."
+    </blockquote>
+  </div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 6 &bull; 90 Seconds</span>
+    <h3>Pillar 5: Virtusa Delivery Leadership War Room & Decision Log</h3>
+    <p><strong>Action:</strong> Click <strong>⚡ Virtusa War Room</strong> (or Pillar 5 in sidebar). Filter the Decision Log. Use the <em>Same News, Three Audiences</em> dropdown.</p>
+    <p><strong>Point to:</strong> The 4 numbers (18&rarr;9, 7 functions, 8 injects, 0 code), the Decision Log table, and click <strong>"Options &rarr;"</strong> on any row.</p>
+    <blockquote>
+      "Here is Pillar 5: our interactive <strong>Virtusa Module 8 War Room Hub</strong>.<br><br>
+      It tracks the 4 foundational pilot numbers: 18 down to 9 days, 7 functions moving together, 8 injects across 2 rounds, and 0 lines of code today.<br><br>
+      In the Decision Log, every inject from class is recorded with its owner, reversibility, who we told, and deadline.<br><br>
+      Below it is our interactive <strong>'Same News, Three Audiences'</strong> engine from Slide 11. When I select 'Inject 7: Trust Slipping', the system displays how the exact same event translates across Analysts (format details), CRO (human controls caught it), and CEO (volume impact is negligible).<br><br>
+      Clicking 'Options' demonstrates our <strong>Strong Escalation framework from Slide 9</strong>: Situation on 18&rarr;9, three options with trade-offs, our recommendation, and decision deadline."
+    </blockquote>
+  </div>
+
+  <div class="step-box highlight">
+    <span class="action-badge">Step 7 &bull; 30 Seconds</span>
+    <h3>Pillar 3: Immutable Audit Trail & Closing Statement</h3>
+    <p><strong>Action:</strong> Click <strong>3. Case Audit Log</strong> in the left sidebar.</p>
+    <blockquote>
+      "Every single action across all stakeholder views is immutably logged with millisecond timestamps, staff attribution (Elena Gomez), model routing, exact token consumption, and micro-costs ($0.00112).<br><br>
+      To conclude, as summarized in Slide 12 of Module 8:<br>
+      1. <strong>Decide, communicate, unblock &mdash; in that order.</strong><br>
+      2. <strong>Every decision has an owner, an audience, and reversibility.</strong><br>
+      3. <strong>Escalate early with options, not just problems.</strong><br><br>
+      Thank you. I am happy to take any questions."
+    </blockquote>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ================= THE 8 INJECTS DECISION LOG TABLE ================= -->
+  <h2>3. Virtusa War-Room Decision Log Reference (All 8 Injects)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 10%;">ID & Round</th>
+        <th style="width: 20%;">Inject & Constraint</th>
+        <th style="width: 25%;">Executive Decision Made</th>
+        <th style="width: 15%;">Owner</th>
+        <th style="width: 15%;">Door Type</th>
+        <th style="width: 15%;">Who We Told</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>DEC-01</strong><br><span class="badge badge-blue">Round 1</span></td>
+        <td><strong>Quota cap:</strong> Azure OpenAI quota caps pilot at 40% volume; 3 weeks to raise it.</td>
+        <td>Use structured AA data where it exists; extract rest; route overflow to Google Vertex Gemini backup; request quota today.</td>
+        <td>Engineering Lead</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>Head of Credit Ops, CISO, Pilot RMs</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-02</strong><br><span class="badge badge-blue">Round 1</span></td>
+        <td><strong>Scope pressure:</strong> CEO: "Can AI auto-approve loans under ₹5 lakh?"</td>
+        <td>Decline auto-approval under ADR-001. AI prepares draft memos in 20s; human analyst retains sole sign-off authority.</td>
+        <td>Product & Architecture</td>
+        <td><span class="badge badge-amber" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">One-way door</span></td>
+        <td>CEO, CRO, Head of Credit Ops, Legal</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-03</strong><br><span class="badge badge-blue">Round 1</span></td>
+        <td><strong>Blocked consent:</strong> AA consent wording needs Legal review &ndash; 10 days.</td>
+        <td>Decouple intake: accept uploaded digital PDF statements via OCR in parallel while Legal finalizes AA consent.</td>
+        <td>Operations Lead</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>Legal Counsel, Credit Ops, Pilot RMs</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-04</strong><br><span class="badge badge-blue">Round 1</span></td>
+        <td><strong>Model risk:</strong> "Validate extraction before pilot widens" &ndash; 6 weeks freeze.</td>
+        <td>Deploy 2nd-Line Critic agent for 100% citation checks + 100% human sign-off sampling, unblocking pilot in 48 hours.</td>
+        <td>Model Risk Sponsor & Architect</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>Head of Model Risk, CRO, Delivery Lead</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-05</strong><br><span class="badge badge-emerald">Round 2</span></td>
+        <td><strong>Sales vs Credit Ops:</strong> RMs refuse completeness checklist &ndash; "it slows logins".</td>
+        <td>Deploy automated Gap Detection Agent (AGNT-GAP-02) to verify filings in 15 seconds at upload, eliminating manual RM checklists.</td>
+        <td>Credit Ops & Product Lead</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>Head of Sales (RMs), Head of Credit Ops</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-06</strong><br><span class="badge badge-emerald">Round 2</span></td>
+        <td><strong>A security breach:</strong> Engineer tested with real customer bank statement in dev.</td>
+        <td>Immediate containment: purge dev logs/DB, cycle credentials, deploy automated synthetic PII masker across all harnesses.</td>
+        <td>CISO & Engineering Lead</td>
+        <td><span class="badge badge-amber" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">One-way door</span></td>
+        <td>CISO, Data Protection Officer, CRO</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-07</strong><br><span class="badge badge-emerald">Round 2</span></td>
+        <td><strong>Trust slipping:</strong> Analysts edit 35% of figures from Bank Format C.</td>
+        <td>Isolate Bank Format C in Agent Toner. Lower temperature to 0.05, adjust table bounding boxes, and display pre-sign UI alert.</td>
+        <td>Lead AI Engineer & Elena Gomez</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>All Analysts, Credit Ops, Model Risk</td>
+      </tr>
+      <tr>
+        <td><strong>DEC-08</strong><br><span class="badge badge-emerald">Round 2</span></td>
+        <td><strong>The date moves:</strong> Steering committee is now a week earlier.</td>
+        <td>Freeze demo scope to Week 3 core slice (statement + GST extraction + gap outreach). Present live 18 &rarr; 9 tracking dashboard.</td>
+        <td>Delivery Lead & Program Sponsor</td>
+        <td><span class="badge badge-blue">Two-way door</span></td>
+        <td>Steering Committee, Workstream Leads</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ================= SAME NEWS, THREE AUDIENCES TABLE ================= -->
+  <h2>4. Slide 11 Matrix: Same News, Three Audiences</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Audience</th>
+        <th style="width: 30%;">What They Need to Hear (Principle)</th>
+        <th style="width: 50%;">Example (Inject 7: 35% Edits on Bank Format C)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>📋 Analysts</strong><br><span class="badge badge-blue">Elena Gomez</span></td>
+        <td>Which format is affected, what to check today, how to flag it.</td>
+        <td>"⚠️ Alert: Bank Format C statements show table shift anomalies. Double-check operating turnover and tax fields; fine-tuned model deploying tonight."</td>
+      </tr>
+      <tr>
+        <td><strong>🛡️ CRO & Risk</strong><br><span class="badge badge-emerald">David Ross</span></td>
+        <td>The risk, the control that caught it, and that a person still decides.</td>
+        <td>"The 35% manual edits prove that analyst human oversight is catching OCR anomalies exactly as designed; credit risk of erroneous approval is 0%."</td>
+      </tr>
+      <tr>
+        <td><strong>👔 CEO & Business</strong><br><span class="badge badge-purple">Executive Board</span></td>
+        <td>The effect on the 18 &rarr; 9 outcome, what we're doing, and the decision we need.</td>
+        <td>"Targeted fix in progress; only 12% of pilot volume uses Format C; overall pilot cycle time impact is under 0.4 days, keeping the 18 &rarr; 9 milestone secure."</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ================= GUIDE Q&A CHEAT-SHEET ================= -->
+  <h2>5. Guide Q&A Cheat-Sheet (Bulletproof Answers)</h2>
+
+  <div class="pro-tip">
+    <strong>Q: "Why did you build 4 stakeholder lenses over the same data instead of separate apps?"</strong><br>
+    <em>Answer:</em> "In enterprise banking, separate tools create fragmented data silos and conflicting metrics between Risk and Business. Under our decoupled gateway architecture, all 4 stakeholders view the exact same live case (NCB-CASE-7891), audit log, and cost telemetry, but through a lens customized to their regulatory responsibility."
+  </div>
+
+  <div class="pro-tip">
+    <strong>Q: "What is the key takeaway between a one-way and two-way door?"</strong><br>
+    <em>Answer:</em> "As taught in Slide 2 and 5, a two-way door is reversible with low cost (e.g., routing traffic to Gemini backup when Azure hits a 40% quota cap). A one-way door is irreversible (e.g., removing human sign-off creates immediate regulatory liability under SMCR). One-way doors are strictly flagged and cannot be overridden by engineers."
+  </div>
+
+  <div class="pro-tip">
+    <strong>Q: "How does this prototype satisfy delivery leadership without coding today?"</strong><br>
+    <em>Answer:</em> "Slide 4 emphasizes '0 lines of code today' because real delivery leadership is about orchestration: aligning 7 functions, managing dependencies, maintaining an immutable decision log, and escalating early with options rather than just problems."
+  </div>
+
+  <div class="footer">
+    Northgate Corporate Bank &bull; Virtusa Lead FDE Programme &bull; Module 8 Delivery Leadership War Room &bull; Generated Nov 2026
+  </div>
+
+</body>
+</html>

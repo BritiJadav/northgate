@@ -1,0 +1,2354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northgate Corporate Bank — Client Onboarding & KYC Assistant</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    html { font-size: 16.5px; } /* Scales up typography across the entire page for optimal presentation readability */
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15px; line-height: 1.6; }
+    pre, code, .font-mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans antialiased">
+
+  <!-- ================= SIGNED-OUT VIEW ================= -->
+  <section id="login-view" class="max-w-4xl mx-auto my-12 p-6 space-y-8 hidden">
+    <div class="text-center space-y-3">
+      <div class="inline-block bg-blue-100 text-blue-800 border border-blue-200 font-bold px-3.5 py-1 rounded-full text-xs">
+        NORTHGATE CORPORATE BANK · SECURE STAFF PORTAL
+      </div>
+      <h2 class="text-3xl font-bold text-slate-900">Staff Sign-In & Authentication</h2>
+      <p class="text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+        Sign in with your bank staff credentials. Your role determines which case actions you can perform and approve under Bank Policy ADR-001.
+      </p>
+    </div>
+
+    <!-- Username & Password Form -->
+    <div class="max-w-md mx-auto bg-white border border-slate-200 rounded-2xl p-6 shadow-md space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="bg-blue-700 text-white font-black text-xs px-2.5 py-0.5 rounded">NCB</span>
+          <h3 class="text-base font-bold text-slate-900">Staff Credentials</h3>
+        </div>
+        <span class="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded font-semibold">Bank-Secured</span>
+      </div>
+
+      <div class="space-y-3.5 text-sm">
+        <div>
+          <label class="block text-slate-700 mb-1 font-semibold text-xs">Staff Username</label>
+          <input id="login-username" type="text" placeholder="e.g. elena.gomez" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-900 outline-none focus:border-blue-600 focus:bg-white text-sm">
+        </div>
+        <div>
+          <label class="block text-slate-700 mb-1 font-semibold text-xs">Password</label>
+          <input id="login-password" type="password" placeholder="Enter bank password" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-slate-900 outline-none focus:border-blue-600 focus:bg-white text-sm">
+        </div>
+
+        <div id="login-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
+
+        <button onclick="submitPasswordLogin()" id="btn-submit-login" class="w-full py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-xl transition shadow-xs text-sm flex items-center justify-center gap-2 mt-2">
+          <span>🔑 Authenticate & Open Session</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">— Or Quick-Select Your Role —</span>
+    </div>
+
+    <!-- 4 Persona Cards in Clean Light Mode -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div onclick="selectPersonaAndSignIn('elena')" class="p-6 bg-white hover:bg-blue-50/40 border border-slate-200 hover:border-blue-500 rounded-2xl cursor-pointer transition space-y-3 shadow-xs hover:shadow group">
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-blue-700 flex items-center justify-center font-bold text-white text-base">EG</div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-blue-700">Elena Gomez</h3>
+              <p class="text-xs text-slate-500">Senior KYC Analyst · Operations</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200 px-2.5 py-0.5 rounded">KYC Analyst</span>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          <strong>Daily Role:</strong> Analyzes complex company structures, detects missing documents on Day 2, and confirms ownership facts (Sign 1).
+        </p>
+        <div class="text-xs pt-2.5 border-t border-slate-100 flex justify-between items-center">
+          <span class="text-emerald-700 font-semibold">✔ Can verify ownership & gaps</span>
+          <span class="text-slate-400">✖ Risk rating reserved for MLRO</span>
+        </div>
+      </div>
+
+      <div onclick="selectPersonaAndSignIn('sarah')" class="p-6 bg-white hover:bg-indigo-50/40 border border-slate-200 hover:border-indigo-500 rounded-2xl cursor-pointer transition space-y-3 shadow-xs hover:shadow group">
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-indigo-700 flex items-center justify-center font-bold text-white text-base">SJ</div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-indigo-700">Sarah Jenkins</h3>
+              <p class="text-xs text-slate-500">Head of KYC Operations</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold bg-indigo-100 text-indigo-800 border border-indigo-200 px-2.5 py-0.5 rounded">Operations Head</span>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          <strong>Daily Role:</strong> Department sponsor. Monitors case cycle times, adjusts AI model settings, and tests system backup reliability.
+        </p>
+        <div class="text-xs pt-2.5 border-t border-slate-100 flex justify-between items-center">
+          <span class="text-emerald-700 font-semibold">✔ Full operational control</span>
+          <span class="text-slate-400">✖ Risk rating reserved for MLRO</span>
+        </div>
+      </div>
+
+      <div onclick="selectPersonaAndSignIn('david')" class="p-6 bg-white hover:bg-emerald-50/40 border border-slate-200 hover:border-emerald-500 rounded-2xl cursor-pointer transition space-y-3 shadow-xs hover:shadow group">
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-emerald-700 flex items-center justify-center font-bold text-white text-base">DR</div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-emerald-700">David Ross</h3>
+              <p class="text-xs text-slate-500">Money Laundering Reporting Officer (MLRO)</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded">Compliance / MLRO</span>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          <strong>Daily Role:</strong> Personally accountable for anti-money laundering controls under SMCR regulations. <strong>Sole officer</strong> authorized to sign off on final risk ratings (Sign 3).
+        </p>
+        <div class="text-xs pt-2.5 border-t border-slate-100 flex justify-between items-center">
+          <span class="text-emerald-700 font-bold">✔ Sole authority to Sign Risk</span>
+          <span class="text-emerald-700 font-bold">✔ Quality review audit</span>
+        </div>
+      </div>
+
+      <div onclick="selectPersonaAndSignIn('priya')" class="p-6 bg-white hover:bg-purple-50/40 border border-slate-200 hover:border-purple-500 rounded-2xl cursor-pointer transition space-y-3 shadow-xs hover:shadow group">
+        <div class="flex justify-between items-start">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-purple-700 flex items-center justify-center font-bold text-white text-base">PS</div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 group-hover:text-purple-700">Priya Sharma</h3>
+              <p class="text-xs text-slate-500">Enterprise Architect & IT Lead</p>
+            </div>
+          </div>
+          <span class="text-xs font-semibold bg-purple-100 text-purple-800 border border-purple-200 px-2.5 py-0.5 rounded">Administrator</span>
+        </div>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          <strong>Daily Role:</strong> Oversees cloud systems, manages AI provider gateways, and tests system reliability and backup failovers.
+        </p>
+        <div class="text-xs pt-2.5 border-t border-slate-100 flex justify-between items-center">
+          <span class="text-emerald-700 font-semibold">✔ Full system administration</span>
+          <span class="text-purple-700 font-semibold">✔ AI model management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= SIGNED-IN APPLICATION DASHBOARD (VERTICAL SIDEBAR LAYOUT) ================= -->
+  <div id="app-view" class="min-h-screen flex">
+    
+    <!-- ================= LEFT VERTICAL SIDEBAR ================= -->
+    <aside class="w-84 bg-white border-r border-slate-200 flex flex-col shrink-0 min-h-screen sticky top-0 h-screen shadow-2xs z-30">
+      
+      <!-- Top Brand Header in Sidebar -->
+      <div class="p-6 border-b border-slate-100 flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-blue-700 flex items-center justify-center text-white font-black text-lg shadow-xs tracking-wider shrink-0">
+          NCB
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-slate-900 tracking-tight leading-tight">Northgate Bank</h1>
+          <p class="text-xs text-slate-500 font-semibold mt-0.5">KYC Onboarding Co-Pilot</p>
+        </div>
+      </div>
+
+      <!-- Vertical 4 Pillar Navigation Menu (Top-Left Column) -->
+      <div class="p-4 flex-1 space-y-2.5 overflow-y-auto">
+        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider px-3 py-1">
+          Pillars & Workspaces
+        </div>
+
+        <!-- Pillar 1: Case Review -->
+        <button onclick="switchTab('tab-workbench')" id="nav-workbench" class="w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 bg-blue-50 text-blue-700 border border-blue-200 shadow-2xs font-bold group">
+          <span class="text-2xl mt-0.5 shrink-0">📋</span>
+          <div>
+            <div class="nav-item-title text-sm font-bold text-blue-700">1. Case Review</div>
+            <div class="nav-item-sub text-xs text-blue-600/90 font-normal mt-0.5 leading-snug">AI Assistant & Quality Check</div>
+          </div>
+        </button>
+
+        <!-- Pillar 2: AI Provider Settings -->
+        <button onclick="switchTab('tab-toner')" id="nav-toner" class="w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 text-slate-600 hover:bg-slate-100/80 border border-transparent hover:border-slate-200 group">
+          <span class="text-2xl mt-0.5 shrink-0">⚙️</span>
+          <div>
+            <div class="nav-item-title text-sm font-bold text-slate-800">2. AI Provider Settings</div>
+            <div class="nav-item-sub text-xs text-slate-500 font-normal mt-0.5 leading-snug">Models & Backup Test</div>
+          </div>
+        </button>
+
+        <!-- Pillar 3: Case Audit Log -->
+        <button onclick="switchTab('tab-governance')" id="nav-governance" class="w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 text-slate-600 hover:bg-slate-100/80 border border-transparent hover:border-slate-200 group">
+          <span class="text-2xl mt-0.5 shrink-0">📊</span>
+          <div>
+            <div class="nav-item-title text-sm font-bold text-slate-800">3. Case Audit Log</div>
+            <div class="nav-item-sub text-xs text-slate-500 font-normal mt-0.5 leading-snug">Activity & Cost Tracking</div>
+          </div>
+        </button>
+
+        <!-- Pillar 4: Security & Permissions -->
+        <button onclick="switchTab('tab-headers')" id="nav-headers" class="w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 text-slate-600 hover:bg-slate-100/80 border border-transparent hover:border-slate-200 group">
+          <span class="text-2xl mt-0.5 shrink-0">🔒</span>
+          <div>
+            <div class="nav-item-title text-sm font-bold text-slate-800">4. Security & Permissions</div>
+            <div class="nav-item-sub text-xs text-slate-500 font-normal mt-0.5 leading-snug">Role-Based Staff Access</div>
+          </div>
+        </button>
+
+        <!-- Pillar 5: Virtusa Module 8 War Room -->
+        <button onclick="switchTab('tab-warroom')" id="nav-warroom" class="w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 text-slate-600 hover:bg-slate-100/80 border border-transparent hover:border-slate-200 group">
+          <span class="text-2xl mt-0.5 shrink-0">⚡</span>
+          <div>
+            <div class="nav-item-title text-sm font-bold text-slate-800">5. War Room & Decisions</div>
+            <div class="nav-item-sub text-xs text-slate-500 font-normal mt-0.5 leading-snug">18→9 Target & 8 Injects</div>
+          </div>
+        </button>
+
+        <!-- Reliability Status Card in Sidebar -->
+        <div class="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-sm">
+          <div class="text-xs font-bold text-slate-700 uppercase tracking-wider">System AI Health</div>
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-600">Primary AI:</span>
+              <span class="text-emerald-700 font-semibold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Gemini 3 Flash
+              </span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-600">Backup AI:</span>
+              <span class="text-amber-700 font-semibold flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> Claude 3.5 Sonnet
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Bottom: Active Staff Member & Summary Pack Link -->
+      <div class="p-4 border-t border-slate-100 space-y-3.5 bg-slate-50/50 shrink-0">
+        <a href="/static/northgate_presentation_pack.html" target="_blank" class="w-full py-2.5 px-3.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-2xs transition">
+          <span>📊 Open Executive Pack</span>
+        </a>
+
+        <!-- Current User Card -->
+        <div class="flex items-center justify-between pt-1">
+          <div class="flex items-center gap-3">
+            <div id="sidebar-avatar" class="w-9 h-9 rounded-full bg-blue-700 flex items-center justify-center font-bold text-white text-sm shadow-2xs">EG</div>
+            <div>
+              <div id="sidebar-user-name" class="text-sm font-bold text-slate-900 leading-tight">Elena Gomez</div>
+              <div id="sidebar-user-role" class="text-xs text-slate-500">KYC Analyst</div>
+            </div>
+          </div>
+          <button onclick="handleSignOut()" class="text-xs text-rose-600 hover:text-rose-800 font-bold p-1 hover:underline">
+            Exit
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ================= RIGHT MAIN WORKSPACE ================= -->
+    <div class="flex-1 flex flex-col min-w-0">
+      
+      <!-- Top Workspace Navbar -->
+      <header class="bg-white border-b border-slate-200 sticky top-0 z-20 px-8 py-4 shadow-2xs flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        
+        <!-- Breadcrumb / Case Info -->
+        <div class="flex items-center gap-3 text-sm text-slate-600">
+          <span class="font-medium text-slate-400">Case Ref:</span>
+          <span class="font-mono bg-slate-100 text-slate-800 px-2.5 py-1 rounded font-bold text-xs">NCB-CASE-7891</span>
+          <span class="text-slate-300">/</span>
+          <span class="font-bold text-slate-900 text-base">Apex Meridian Shipping Ltd</span>
+          <span class="bg-amber-50 text-amber-800 border border-amber-200 font-bold px-3 py-0.5 rounded-full text-xs">
+            Day 32 of Target 30
+          </span>
+        </div>
+
+        <!-- Role Quick Switcher -->
+        <div class="flex items-center gap-3 text-sm">
+          <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 py-2 px-3.5 rounded-xl">
+            <span class="text-slate-600 font-semibold text-xs">Switch Staff Role:</span>
+            <select id="auth-profile-select" onchange="changeAuthProfile()" class="bg-white text-slate-800 border border-slate-300 rounded px-2.5 py-1 outline-none text-xs font-semibold focus:ring-1 focus:ring-blue-600">
+              <option value="elena">Elena Gomez (KYC Analyst)</option>
+              <option value="sarah">Sarah Jenkins (Operations Head)</option>
+              <option value="david">David Ross (Compliance MLRO)</option>
+              <option value="priya">Priya Sharma (Administrator)</option>
+            </select>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- Same Data · Multi-Stakeholder Agentic Lens Bar (Virtusa Slide 11) - Light Executive Mode -->
+      <div class="bg-slate-50 border-b border-slate-200 px-8 py-3.5 flex flex-wrap items-center justify-between gap-4 shadow-2xs">
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-black uppercase tracking-widest text-slate-800 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            Same Data · 4 Stakeholder Lenses
+          </span>
+          <span class="text-xs text-slate-500 font-mono hidden lg:inline">| Virtusa Module 8: Kestrel Pilot Week 3 Target: 18 &rarr; 9 Days</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="switchStakeholderLens('ceo')" id="lens-btn-ceo" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 shadow-2xs">
+            👔 CEO / Business
+          </button>
+          <button onclick="switchStakeholderLens('analyst')" id="lens-btn-analyst" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-blue-600 text-white border border-blue-600 shadow-xs">
+            📋 Analyst Workbench
+          </button>
+          <button onclick="switchStakeholderLens('cro')" id="lens-btn-cro" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 shadow-2xs">
+            🛡️ CRO & Risk (Human Decides)
+          </button>
+          <button onclick="switchStakeholderLens('engineering')" id="lens-btn-engineering" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 shadow-2xs">
+            ⚙️ Architecture & Quotas
+          </button>
+          <button onclick="switchTab('tab-warroom')" id="lens-btn-warroom" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 shadow-2xs">
+            ⚡ Virtusa War Room
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content Container (Spacious, Large Readable Text) -->
+      <main class="flex-1 p-8 space-y-6 max-w-7xl">
+
+        <!-- ================= TAB 1: CASE REVIEW (WORKBENCH) ================= -->
+        <section id="tab-workbench" class="space-y-6">
+          
+          <!-- What to Check Today (Analyst Lens from Virtusa Slide 11) -->
+          <div class="bg-amber-50/90 border border-amber-200 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xs">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl mt-0.5 shrink-0">⚠️</span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold uppercase tracking-wider text-amber-900 bg-amber-200/80 px-2 py-0.5 rounded font-mono">
+                    Slide 11: What Analyst Needs to Hear
+                  </span>
+                  <span class="text-xs font-bold text-amber-800">What to check today</span>
+                </div>
+                <p class="text-sm text-slate-800 mt-1 font-medium leading-snug">
+                  <strong>Bank Format C Anomaly:</strong> 35% manual edits observed on table parsing. Verify operating turnover and tax items before signing. Fine-tuned model deploying tonight.
+                </p>
+              </div>
+            </div>
+            <button onclick="switchTab('tab-warroom')" class="shrink-0 px-3.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 rounded-xl text-xs font-bold transition">
+              View War Room Decision &rarr;
+            </button>
+          </div>
+          
+          <!-- Case Action Header Card -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-blue-700 font-bold uppercase tracking-wider">Corporate Client Onboarding Case</span>
+                <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded font-mono font-medium">Ref: NCB-CASE-7891</span>
+              </div>
+              <h2 class="text-2xl font-bold text-slate-900 mt-1">Apex Meridian Shipping Ltd</h2>
+              <p class="text-sm text-slate-600 mt-1">
+                Cross-border structure: UK Holding &rarr; Dutch BV (KVK: 74219902) &rarr; Singapore Pte (ACRA) & Guernsey Trust.
+              </p>
+            </div>
+
+            <!-- Action Buttons (Bigger, Clearer, Executive) -->
+            <div class="flex flex-wrap items-center gap-3">
+              <button onclick="toggleFaultInjection()" id="btn-workbench-outage" class="px-4 py-2.5 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5" title="Test System Reliability: Simulate what happens if primary AI is busy">
+                <span>⚡ Test Backup AI (Simulate 429)</span>
+              </button>
+              <button onclick="runUBOExtraction()" id="btn-run-ubo" class="px-5 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-sm font-semibold shadow-xs transition flex items-center gap-2">
+                <span>🏢 Identify Beneficial Owners (UBO)</span>
+              </button>
+              <button onclick="runGapDetector()" id="btn-run-gap" class="px-5 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-semibold shadow-xs transition flex items-center gap-2">
+                <span>📋 Review Missing Documents</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Two-Column Layout -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Left Column: Primary AI Output -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-xs">
+              
+              <!-- Column Header with Badges -->
+              <div class="flex justify-between items-start border-b border-slate-100 pb-4">
+                <div>
+                  <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">AI Case Analysis</span>
+                  <h3 id="agent-output-title" class="text-lg font-bold text-slate-900 mt-0.5">Draft Findings & Document Citations</h3>
+                </div>
+                <div id="output-meta-badges" class="flex items-center gap-2">
+                  <span class="text-xs bg-slate-100 text-slate-600 px-3.5 py-1 rounded-full font-semibold">Ready for Review</span>
+                </div>
+              </div>
+
+              <!-- High-Visibility Fallback Alert Banner (Light Mode) -->
+              <div id="fallback-alert-banner" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-4 text-sm text-amber-900 space-y-2 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2 font-bold text-amber-900 text-base">
+                    <span>🛡️</span>
+                    <span>Automatic Backup AI Activated (Pillar 4: System Reliability)</span>
+                  </div>
+                  <span class="bg-amber-200 text-amber-900 border border-amber-300 px-2.5 py-0.5 rounded text-xs font-bold uppercase">
+                    Seamless Failover
+                  </span>
+                </div>
+                <p class="text-sm text-amber-800 leading-relaxed">
+                  The primary AI (Google Gemini) reported capacity limit (<span id="fallback-banner-reason" class="font-mono font-bold">HTTP 429 Quota Exceeded</span>). The system instantly routed this case to our secondary approved provider: <strong id="fallback-banner-model" class="underline text-amber-950 font-bold">Anthropic Claude 3.5 Sonnet</strong>. Work completed without delay.
+                </p>
+              </div>
+
+              <!-- Trace Info Card (Light Mode) -->
+              <div id="trace-info-box" class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-xs text-slate-700 space-y-1.5 hidden">
+                <div class="flex justify-between text-xs">
+                  <span><strong>Action Ref:</strong> <span id="trace-action-id" class="font-mono text-blue-700 font-bold"></span></span>
+                  <span><strong>Responsible Manager:</strong> <span id="trace-owner" class="text-slate-900 font-bold"></span></span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span><strong>AI Model Used:</strong> <span id="trace-model" class="font-mono text-slate-800 font-medium"></span></span>
+                  <span><strong>Cost:</strong> <span id="trace-cost" class="text-emerald-700 font-bold font-mono"></span> (<span id="trace-latency"></span>ms)</span>
+                </div>
+              </div>
+
+              <!-- Formatted Business View (Human-Readable) -->
+              <div id="agent-formatted-container" class="space-y-4 min-h-[300px]">
+                <div id="agent-empty-state" class="text-center py-16 text-slate-500 space-y-3">
+                  <div class="text-4xl">📄</div>
+                  <p class="text-base font-bold text-slate-800">No Case Analysis Generated Yet</p>
+                  <p class="text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
+                    Click <strong>"Identify Beneficial Owners"</strong> or <strong>"Review Missing Documents"</strong> above to produce an unsealed case draft with document citations.
+                  </p>
+                </div>
+                <div id="agent-formatted-content" class="hidden space-y-4 text-sm"></div>
+              </div>
+
+              <!-- Raw Data Accordion (Optional for Technical Users / Auditors) -->
+              <div class="border-t border-slate-100 pt-3">
+                <button onclick="toggleRawView()" id="btn-toggle-raw" class="text-xs text-slate-500 hover:text-slate-800 flex items-center gap-1 font-semibold">
+                  <span>▶ Show Technical Audit Data (Raw JSON)</span>
+                </button>
+                <div id="raw-json-wrapper" class="hidden mt-2 p-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl text-xs max-h-48 overflow-y-auto">
+                  <pre id="agent-json-content" class="whitespace-pre-wrap leading-relaxed font-mono text-xs"></pre>
+                </div>
+              </div>
+
+              <!-- Quality Checker Trigger Button -->
+              <div class="flex justify-between items-center pt-3 border-t border-slate-100">
+                <span class="text-sm text-slate-600 font-semibold">Step 2: Second-Line Quality Review</span>
+                <button onclick="runCriticVerification()" id="btn-run-critic" disabled class="px-5 py-2.5 bg-purple-700 hover:bg-purple-800 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl text-sm font-semibold shadow-xs transition flex items-center gap-2">
+                  <span>🔍 Run Quality Checker</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Second-Line Quality Review & Human Sign-Off -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-xs">
+              
+              <div class="flex justify-between items-start border-b border-slate-100 pb-4">
+                <div>
+                  <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">Independent Quality Assurance</span>
+                  <h3 class="text-lg font-bold text-slate-900 mt-0.5">Citation & Policy Verification</h3>
+                </div>
+                <span id="critic-verdict-badge" class="text-xs bg-slate-100 text-slate-600 px-3.5 py-1 rounded-full font-bold">
+                  Awaiting Review
+                </span>
+              </div>
+
+              <!-- Critic Review Content -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 min-h-[260px] text-sm space-y-3">
+                <div id="critic-placeholder" class="text-slate-400 py-16 text-center space-y-3">
+                  <div class="text-3xl">🔍</div>
+                  <p class="text-base font-bold text-slate-700">Quality Checker Not Yet Executed</p>
+                  <p class="text-sm text-slate-500 max-w-xs mx-auto leading-relaxed">
+                    Generate the case draft on the left, then click <strong>"Run Quality Checker"</strong> to verify grounding against official registry filings.
+                  </p>
+                </div>
+
+                <div id="critic-content-display" class="hidden space-y-4">
+                  <!-- Score Box -->
+                  <div class="flex items-center justify-between bg-white border border-slate-200 p-4 rounded-xl shadow-2xs">
+                    <span class="font-bold text-slate-800 text-sm">Document Grounding Score:</span>
+                    <span id="critic-confidence-score" class="font-black text-emerald-700 text-2xl">96 / 100</span>
+                  </div>
+
+                  <!-- Citations Audit -->
+                  <div class="space-y-2">
+                    <span class="font-bold text-slate-800 text-xs uppercase tracking-wider">Official Document Citations Checked:</span>
+                    <div id="critic-citations-list" class="space-y-1.5 text-xs"></div>
+                  </div>
+
+                  <!-- Policy Gate Checks -->
+                  <div class="space-y-2">
+                    <span class="font-bold text-slate-800 text-xs uppercase tracking-wider">Regulatory Gatekeeper Checks:</span>
+                    <div id="critic-gates-list" class="space-y-1.5 text-xs"></div>
+                  </div>
+
+                  <!-- Critic Notes -->
+                  <div class="p-3.5 bg-purple-50/70 border border-purple-200 rounded-xl text-purple-950 text-sm leading-relaxed" id="critic-notes-text"></div>
+                </div>
+              </div>
+
+              <!-- Human-In-The-Loop Sign-Off Gate (ADR-001) -->
+              <div class="border-t border-slate-100 pt-4 space-y-3.5">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h4 class="text-sm font-bold text-slate-900">Human Approval Gate (Bank Policy ADR-001)</h4>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                      AI produces unsealed drafts only. A human bank officer must verify and sign off before records are committed.
+                    </p>
+                  </div>
+                  <span class="text-xs text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full font-mono font-bold">
+                    Person Signs 1 · 2 · 3
+                  </span>
+                </div>
+
+                <!-- Sign-Off Action Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                  <button onclick="submitHumanSignoff('PERSON_SIGNS_1_FACTS', 'APPROVED')" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold transition text-center shadow-2xs leading-snug">
+                    Sign 1: Confirm Facts<br><span class="text-xs text-slate-500 font-normal">(KYC Analyst)</span>
+                  </button>
+                  <button onclick="submitHumanSignoff('PERSON_SIGNS_2_OUTREACH', 'APPROVED')" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold transition text-center shadow-2xs leading-snug">
+                    Sign 2: Send Outreach<br><span class="text-xs text-slate-500 font-normal">(Relationship Mgr)</span>
+                  </button>
+                  <button id="btn-sign-risk" onclick="submitHumanSignoff('PERSON_SIGNS_3_RISK', 'APPROVED')" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-xl text-xs font-bold transition text-center shadow-2xs leading-snug">
+                    Sign 3: Sign Risk<br><span class="text-xs text-slate-500 font-normal">(MLRO Only)</span>
+                  </button>
+                </div>
+
+                <div id="signoff-status-msg" class="text-sm text-emerald-700 font-bold pt-1 font-mono"></div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================= TAB 2: AI PROVIDER SETTINGS & BACKUP TEST ================= -->
+        <section id="tab-toner" class="space-y-6 hidden">
+          
+          <!-- Fault Injection / Backup Test Box -->
+          <div class="bg-amber-50 border border-amber-300 rounded-2xl p-6 space-y-4 shadow-xs">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div>
+                <span class="text-xs font-bold text-amber-800 uppercase tracking-wider">Pillar 4: System Reliability & Business Continuity</span>
+                <h2 class="text-xl font-bold text-slate-900 mt-1">Primary AI Outage & Automatic Backup Test</h2>
+                <p class="text-sm text-slate-700 mt-1.5 max-w-2xl leading-relaxed">
+                  Test what happens when Google Gemini experiences a rate-limit (HTTP 429) or cloud downtime. 
+                  The system automatically switches to Anthropic Claude 3.5 Sonnet so KYC analysts experience zero interruption.
+                </p>
+              </div>
+              <div class="flex items-center gap-3 shrink-0">
+                <span id="outage-status-indicator" class="text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-2 rounded-xl">
+                  STATUS: Primary Normal
+                </span>
+                <button onclick="toggleFaultInjection()" id="btn-toggle-outage" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-sm font-bold shadow-xs transition whitespace-nowrap">
+                  Simulate Primary 429 Outage
+                </button>
+              </div>
+            </div>
+
+            <!-- Instructional Guidance when Outage is active -->
+            <div id="outage-next-steps" class="hidden text-sm bg-white border border-amber-300 p-4 rounded-xl text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+              <div class="space-y-1">
+                <div class="font-bold text-amber-900 flex items-center gap-2 text-sm">
+                  <span>⚡ Primary Outage Simulated (HTTP 429 Active)!</span>
+                </div>
+                <p class="text-sm text-slate-600">
+                  Now click on <strong>1. Case Review</strong> in the left menu and click <strong>"Identify Beneficial Owners"</strong> to see the yellow Backup Badge and automatic failover in action.
+                </p>
+              </div>
+              <button onclick="switchTab('tab-workbench')" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold text-sm whitespace-nowrap shadow-xs transition shrink-0">
+                Go to Case Review Now →
+              </button>
+            </div>
+          </div>
+
+          <!-- Agent Toner: Runtime Model Configuration Table -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-xs">
+            <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
+              <div>
+                <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Pillar 2: Model Flexibility (Agent Toner)</span>
+                <h3 class="text-lg font-bold text-slate-900 mt-1">Configured AI Agents & Model Assignments</h3>
+                <p class="text-sm text-slate-600 mt-0.5">Models are decoupled from bank logic. Managers can reconfigure providers or temperature at runtime without redeploying code.</p>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse">
+                <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-xs border-b border-slate-200">
+                  <tr>
+                    <th class="p-4">Agent Name & Ref</th>
+                    <th class="p-4">Assigned Manager</th>
+                    <th class="p-4">Primary Model</th>
+                    <th class="p-4">Backup Model</th>
+                    <th class="p-4">Temp</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="agent-toner-table-body" class="divide-y divide-slate-100 text-slate-800">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tuning Modal / Inline Box -->
+          <div id="tuning-modal" class="bg-white border border-blue-200 rounded-2xl p-6 space-y-4 shadow-md hidden">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+              <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span>⚙ Adjust Agent Settings:</span>
+                <span id="tune-agent-name" class="text-blue-700"></span>
+              </h3>
+              <button onclick="closeTuningModal()" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕ Cancel</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <label class="block text-slate-700 mb-1 font-semibold text-xs">Primary Model:</label>
+                <select id="tune-primary-model" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-800 text-sm">
+                  <option value="gemini-3-flash-preview">Gemini 3 Flash Preview (Approved Model)</option>
+                  <option value="gemini-1.5-pro">Google Gemini 1.5 Pro</option>
+                  <option value="gemini-1.5-flash">Google Gemini 1.5 Flash</option>
+                  <option value="claude-3-5-sonnet">Anthropic Claude 3.5 Sonnet</option>
+                  <option value="gpt-4o">Azure OpenAI GPT-4o</option>
+                  <option value="enterprise-local-llama3">Local Llama-3 Cluster</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-700 mb-1 font-semibold text-xs">Secondary Backup Model:</label>
+                <select id="tune-fallback-model" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-800 text-sm">
+                  <option value="claude-3-5-sonnet">Anthropic Claude 3.5 Sonnet</option>
+                  <option value="gpt-4o">Azure OpenAI GPT-4o</option>
+                  <option value="gemini-1.5-flash">Google Gemini 1.5 Flash</option>
+                  <option value="enterprise-local-llama3">Local Llama-3 Cluster</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-700 mb-1 font-semibold text-xs">Creativity / Temperature (<span id="tune-temp-val">0.2</span>):</label>
+                <input type="range" id="tune-temp-input" min="0.0" max="1.0" step="0.05" value="0.2" oninput="document.getElementById('tune-temp-val').innerText = this.value" class="w-full mt-2">
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+              <button onclick="saveAgentTuning()" class="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-sm font-semibold shadow-xs">
+                Save & Deploy to Runtime
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================= TAB 3: AUDIT LOG & COST TRACKING ================= -->
+        <section id="tab-governance" class="space-y-6 hidden">
+          
+          <!-- Metrics KPI Summary Cards (Light Mode) -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+              <div class="text-sm text-slate-600 font-semibold">Total Case Actions</div>
+              <div id="kpi-total-actions" class="text-3xl font-black text-slate-900 mt-1">0</div>
+              <div class="text-xs text-slate-400 mt-1">Granular traces recorded</div>
+            </div>
+            <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+              <div class="text-sm text-slate-600 font-semibold">Total AI Cost (USD)</div>
+              <div id="kpi-total-cost" class="text-3xl font-black text-blue-700 font-mono mt-1">$0.000000</div>
+              <div class="text-xs text-emerald-700 font-bold mt-1">~98% cheaper than manual review</div>
+            </div>
+            <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+              <div class="text-sm text-slate-600 font-semibold">Backup AI Activations</div>
+              <div id="kpi-total-failovers" class="text-3xl font-black text-amber-600 mt-1">0</div>
+              <div class="text-xs text-slate-500 mt-1">Secondary model failovers</div>
+            </div>
+            <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+              <div class="text-sm text-slate-600 font-semibold">Quality Check Pass Rate</div>
+              <div id="kpi-critic-pass" class="text-3xl font-black text-emerald-700 mt-1">100%</div>
+              <div class="text-xs text-purple-700 font-bold mt-1">Zero ungrounded findings</div>
+            </div>
+          </div>
+
+          <!-- Audit Trail Table (Light Mode) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-xs">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+              <div>
+                <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Pillar 3: Governance & Observability</span>
+                <h3 class="text-lg font-bold text-slate-900 mt-1">Per-Action Audit Trail & Cost Breakdown</h3>
+                <p class="text-sm text-slate-600 mt-0.5">Every AI call is logged with exact timestamps, staff attribution, token consumption, and cost.</p>
+              </div>
+              <button onclick="refreshGovernanceData()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold transition">
+                🔄 Refresh Log
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse">
+                <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-xs border-b border-slate-200">
+                  <tr>
+                    <th class="p-4">Action Ref / Time</th>
+                    <th class="p-4">Agent & Manager</th>
+                    <th class="p-4">Staff Caller</th>
+                    <th class="p-4">Model Used</th>
+                    <th class="p-4 text-right">Tokens</th>
+                    <th class="p-4 text-right">Cost (USD)</th>
+                    <th class="p-4 text-center">Status</th>
+                    <th class="p-4 text-center">Human Sign</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-table-body" class="divide-y divide-slate-100 text-slate-800">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================= TAB 4: SECURITY & STAFF PERMISSIONS ================= -->
+        <section id="tab-headers" class="space-y-6 hidden">
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-5 shadow-xs">
+            <div>
+              <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Pillar 1: Bank-Grade Security</span>
+              <h2 class="text-xl font-bold text-slate-900 mt-1">Staff Role-Based Permissions & API Security</h2>
+              <p class="text-sm text-slate-700 mt-1 max-w-3xl leading-relaxed">
+                The frontend never connects directly to external AI providers and never stores API keys in browser code. 
+                All requests pass through the Northgate security gateway, which validates user identity and enforces role boundaries before calling approved models.
+              </p>
+            </div>
+
+            <!-- Security Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
+                <h4 class="text-sm font-bold text-slate-900">Session Security Headers</h4>
+                <p class="text-xs text-slate-500">Automatically attached to every request:</p>
+                <div class="font-mono text-xs bg-white p-3.5 rounded-lg border border-slate-200 text-slate-800 space-y-1.5 leading-relaxed">
+                  <div><strong class="text-blue-700">Authorization:</strong> <span id="hdr-auth">Bearer token-elena-analyst</span></div>
+                  <div><strong class="text-emerald-700">X-API-Key:</strong> <span id="hdr-key">northgate-analyst-key-101</span></div>
+                  <div><strong class="text-slate-500">Gatekeeper:</strong> FastAPI Backend RBAC</div>
+                </div>
+              </div>
+
+              <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
+                <h4 class="text-sm font-bold text-slate-900">Compliance & Regulatory Safety</h4>
+                <ul class="text-sm text-slate-700 space-y-2 list-disc pl-4 leading-relaxed">
+                  <li><strong>Zero Direct LLM Access:</strong> Frontend cannot bypass bank policies.</li>
+                  <li><strong>Role-Separation:</strong> Analysts cannot sign final AML risk ratings.</li>
+                  <li><strong>Model Decoupling:</strong> AI providers can be swapped instantly.</li>
+                  <li><strong>Audit Immutability:</strong> All transactions logged with micro-costs.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- RBAC Mapping Table -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden text-sm">
+              <div class="bg-slate-50 p-4 font-bold text-slate-800 border-b border-slate-200 uppercase text-xs tracking-wider">
+                Bank Staff Role Permission Matrix
+              </div>
+              <table class="w-full text-left">
+                <thead class="bg-slate-100/70 text-slate-700 text-xs font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="p-3.5">Staff Role</th>
+                    <th class="p-3.5">Persona</th>
+                    <th class="p-3.5">Permitted Operations</th>
+                    <th class="p-3.5">Restricted Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-800">
+                  <tr>
+                    <td class="p-3.5 font-bold text-blue-800">KYC Analyst</td>
+                    <td class="p-3.5 font-medium">Elena Gomez</td>
+                    <td class="p-3.5 text-emerald-700 font-semibold">Extract UBOs, Detect Gaps, Sign 1 (Facts)</td>
+                    <td class="p-3.5 text-slate-400">Sign 3 Risk Rating (MLRO Only)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3.5 font-bold text-indigo-800">Operations Head</td>
+                    <td class="p-3.5 font-medium">Sarah Jenkins</td>
+                    <td class="p-3.5 text-emerald-700 font-semibold">Model Tuning, System Reliability Test, Case Review</td>
+                    <td class="p-3.5 text-slate-400">Sign 3 Risk Rating (MLRO Only)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3.5 font-bold text-emerald-800">Compliance / MLRO</td>
+                    <td class="p-3.5 font-medium">David Ross</td>
+                    <td class="p-3.5 text-emerald-700 font-bold">Sign 3 (AML Risk Rating), Quality Review, Full Audit Access</td>
+                    <td class="p-3.5 text-slate-400">None</td>
+                  </tr>
+                  <tr>
+                    <td class="p-3.5 font-bold text-purple-800">System Administrator</td>
+                    <td class="p-3.5 font-medium">Priya Sharma</td>
+                    <td class="p-3.5 text-emerald-700 font-semibold">Model Swapping, Gateway Routing, Outage Simulation</td>
+                    <td class="p-3.5 text-slate-400">None (Admin Override)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= STAKEHOLDER TAB: CEO & BUSINESS ================= -->
+        <section id="tab-ceo" class="space-y-6 hidden">
+          
+          <!-- Executive Mission Banner - Light Mode -->
+          <div class="bg-gradient-to-r from-blue-50/90 via-indigo-50/50 to-white text-slate-900 border border-blue-200 rounded-2xl p-7 shadow-xs space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <span class="text-xs font-black uppercase tracking-widest text-blue-800 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
+                👔 Chief Executive & Operating Officer Lens · Virtusa Module 8
+              </span>
+              <span class="text-xs text-slate-500 font-mono">Pilot Region: Northern Commercial · Week 3 of 6</span>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 pt-2">
+              <div>
+                <h2 class="text-3xl font-black tracking-tight text-slate-900">Kestrel Pilot: 18 &rarr; 9 Working Days Outcome</h2>
+                <p class="text-sm text-slate-600 mt-1.5 max-w-2xl leading-relaxed">
+                  Decide, communicate, unblock. Transforming corporate onboarding velocity from 18 days down to 9 days through human-in-the-loop agentic automation while eliminating institutional drop-offs.
+                </p>
+              </div>
+              <div class="bg-white border border-blue-200 p-4 rounded-xl text-center shrink-0 min-w-[200px] shadow-2xs">
+                <div class="text-xs text-slate-500 uppercase font-semibold">Current Pilot Velocity</div>
+                <div class="text-4xl font-black text-blue-700 mt-1 font-mono">9.2 Days</div>
+                <div class="text-xs text-emerald-700 mt-1 font-semibold">On track for 9.0 Target (48.9% faster)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CEO Metric KPI Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pilot Milestone</div>
+              <div class="text-3xl font-black text-blue-700">18 &rarr; 9.2</div>
+              <div class="text-xs text-emerald-700 font-semibold mt-1">48.9% cycle time drop</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Institutional Drop-off</div>
+              <div class="text-3xl font-black text-emerald-700">4.2%</div>
+              <div class="text-xs text-slate-500 mt-1">Down from 23% baseline</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Weekly Case Volume</div>
+              <div class="text-3xl font-black text-slate-900 font-mono">142 Cases</div>
+              <div class="text-xs text-blue-600 font-semibold mt-1">+115% capacity increase</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Cost per Case File</div>
+              <div id="ceo-avg-cost" class="text-3xl font-black text-emerald-700 font-mono">$0.00311</div>
+              <div class="text-xs text-slate-500 mt-1">vs $145 manual analyst cost</div>
+            </div>
+          </div>
+
+          <!-- Active Case Status & Business Story (Slide 5: Business needs the 18 -> 9 story and no surprises) -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-blue-700">Overdue Case Recovery</span>
+                  <h3 class="text-lg font-bold text-slate-900 mt-0.5">Apex Meridian Shipping Ltd</h3>
+                </div>
+                <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  Decision Ready in 24h
+                </span>
+              </div>
+              <p class="text-sm text-slate-700 leading-relaxed">
+                This institutional case was previously stuck for <strong>32 days</strong> due to cross-border holding complexity (UK &rarr; Netherlands &rarr; Singapore &rarr; Guernsey). Under the Kestrel pilot, the automated agent extracted all 3 qualified UBOs with citations in <strong>15 seconds</strong>, identified the missing 2025 audited accounts immediately on Day 2, and generated the draft outreach.
+              </p>
+              <div class="grid grid-cols-3 gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200 text-center text-xs">
+                <div>
+                  <div class="text-slate-500">Manual Cycle Time</div>
+                  <div class="font-bold text-slate-800 text-sm mt-0.5">32 Days</div>
+                </div>
+                <div>
+                  <div class="text-slate-500">Agentic Assistance</div>
+                  <div class="font-bold text-blue-700 text-sm mt-0.5">48 Hours</div>
+                </div>
+                <div>
+                  <div class="text-slate-500">Revenue Impact</div>
+                  <div class="font-bold text-emerald-700 text-sm mt-0.5">£1.4M Facility</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CEO Action Card -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Slide 11: What CEO Needs to Hear</span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Same News, CEO Audience</h3>
+              <div class="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl space-y-2 text-xs text-slate-700 leading-relaxed">
+                <p><strong>The Outcome:</strong> Cycle time is tracking at 9.2 days, well ahead of the 18-day baseline.</p>
+                <p><strong>What we're doing:</strong> Bypassed 40% Azure quota constraint using Vertex Gemini failover at zero extra budget.</p>
+                <p><strong>The decision we need:</strong> Approve scope freeze on Week 3 core slice for the early steering committee.</p>
+              </div>
+              <button onclick="switchTab('tab-warroom')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+                Open War Room Decision Log &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Strong Escalation Showcase (Slide 9) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">Virtusa Slide 9 Framework</span>
+                <h3 class="text-lg font-bold text-slate-900 mt-0.5">Executive Escalation Matrix: Strong Escalation with Options</h3>
+              </div>
+              <span class="text-xs font-bold px-3 py-1 bg-purple-100 text-purple-800 rounded-full border border-purple-200">
+                Decide &rarr; Communicate &rarr; Unblock
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/60 space-y-2 text-xs">
+                <div class="font-bold text-rose-900 uppercase text-xs">❌ Weak Escalation (What we avoid)</div>
+                <p class="font-mono text-slate-800">"We're blocked by model risk, please help."</p>
+                <ul class="list-disc pl-4 text-slate-600 space-y-1">
+                  <li>No impact on the 18 &rarr; 9 outcome specified.</li>
+                  <li>No options provided.</li>
+                  <li>No concrete ask or decision date.</li>
+                </ul>
+              </div>
+
+              <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/60 space-y-2 text-xs">
+                <div class="font-bold text-emerald-900 uppercase text-xs">✔ Strong Escalation (What we implement)</div>
+                <p class="text-slate-800"><strong>Situation:</strong> Model Risk requested 6-week validation freeze, threatening 18 &rarr; 9 target.</p>
+                <p class="text-slate-800"><strong>3 Options:</strong> Pause pilot (fails target), Override (audit breach), or Automated Critic + 100% human sampling.</p>
+                <p class="text-slate-800"><strong>Recommendation:</strong> Option C (Critic verification) unblocks pilot in 48h with zero quality loss.</p>
+                <p class="text-emerald-800 font-bold">Decision needed: Today 16:00 IST &bull; Status: RESOLVED</p>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================= STAKEHOLDER TAB: CRO & RISK GOVERNANCE ================= -->
+        <section id="tab-cro" class="space-y-6 hidden">
+          
+          <div class="bg-gradient-to-r from-emerald-50/90 via-teal-50/50 to-white text-slate-900 border border-emerald-200 rounded-2xl p-7 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase tracking-widest text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
+                🛡️ Chief Risk Officer & MLRO Compliance Lens · Slide 5 & 11
+              </span>
+              <span class="text-xs text-slate-500 font-mono">Accountable: David Ross (MLRO) & Claire Bennett (Model Risk)</span>
+            </div>
+            <h2 class="text-3xl font-black tracking-tight text-slate-900">"A Person Still Decides" (ADR-001 Policy)</h2>
+            <p class="text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Slide 11 Principle: The risk, the control that caught it, and that a person still decides. Artificial intelligence produces unsealed draft recommendations only. Statutory accountability under SMCR remains strictly with the certified bank officer.
+            </p>
+          </div>
+
+          <!-- CRO Core KPI Summary -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Human-in-Loop Rate</div>
+              <div class="text-3xl font-black text-emerald-700">100.0%</div>
+              <div class="text-xs text-slate-500 mt-1">Zero autonomous decisions</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Critic Citation Pass</div>
+              <div class="text-3xl font-black text-purple-700">100.0%</div>
+              <div class="text-xs text-emerald-700 font-semibold mt-1">Zero ungrounded hallucinations</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Policy Boundary Blocks</div>
+              <div class="text-3xl font-black text-rose-700">1 Attempt</div>
+              <div class="text-xs text-rose-800 font-bold mt-1">Auto-approve &lt;₹5L BLOCKED</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">MLRO Sign-offs Pending</div>
+              <div id="cro-pending-count" class="text-3xl font-black text-blue-700 font-mono">1 Case</div>
+              <div class="text-xs text-blue-700 font-semibold mt-1">Apex Meridian Shipping</div>
+            </div>
+          </div>
+
+          <!-- Controls that caught issues (Slide 11: The control that caught it) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Model Governance & Incident Response</span>
+                <h3 class="text-lg font-bold text-slate-900 mt-0.5">Controls That Caught Operational Discrepancies</h3>
+              </div>
+              <span class="text-xs font-bold px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full border border-emerald-300">
+                Audited & Logged
+              </span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+                <div class="space-y-1">
+                  <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <span class="px-2 py-0.5 bg-rose-100 text-rose-800 rounded font-mono text-xs">INJECT-02</span>
+                    Scope Pressure: Autonomous Loan Approval under ₹5 Lakh
+                  </div>
+                  <p class="text-slate-600 leading-relaxed">
+                    <strong>Control that caught it:</strong> Gateway Policy Engine strictly enforces ADR-001. Request from executive sponsor to permit autonomous auto-approval was mathematically rejected. AI remains locked to drafting memos only.
+                  </p>
+                </div>
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-lg border border-emerald-300 shrink-0">
+                  BLOCKED BY POLICY
+                </span>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+                <div class="space-y-1">
+                  <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-mono text-xs">INJECT-07</span>
+                    Trust Slipping: 35% Manual Edits on Bank Format C
+                  </div>
+                  <p class="text-slate-600 leading-relaxed">
+                    <strong>Control that caught it:</strong> Human-in-the-Loop Analyst Verification. Analysts caught table coordinate shifts on Format C statements. Proves human oversight functions exactly as designed; risk of erroneous credit approval is 0%.
+                  </p>
+                </div>
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 font-bold rounded-lg border border-blue-300 shrink-0">
+                  HUMAN CONTROL ACTIVE
+                </span>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+                <div class="space-y-1">
+                  <div class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <span class="px-2 py-0.5 bg-purple-100 text-purple-800 rounded font-mono text-xs">INJECT-06</span>
+                    Security Breach: Test with Real Customer Statement in Dev
+                  </div>
+                  <p class="text-slate-600 leading-relaxed">
+                    <strong>Control that caught it:</strong> Containment Runbook & Audit Telemetry. Dev environment purged within 45 minutes, test credentials cycled, automated synthetic PII masker script deployed across all test harnesses.
+                  </p>
+                </div>
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 font-bold rounded-lg border border-purple-300 shrink-0">
+                  CONTAINED & MASKED
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MLRO Sign 3 Station -->
+          <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-emerald-800">MLRO Statutory Signing Authority</div>
+              <h3 class="text-lg font-bold text-slate-900 mt-0.5">Sign 3: Final AML Risk Rating Approval</h3>
+              <p class="text-xs text-slate-600 mt-1">Under SMCR regulations, David Ross (MLRO) must personally sign and unseal the final risk rating.</p>
+            </div>
+            <button onclick="submitHumanSignoff('PERSON_SIGNS_3_RISK', 'APPROVED')" class="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl text-sm transition shadow-sm shrink-0">
+              ✔ Approve Risk Rating as MLRO
+            </button>
+          </div>
+
+        </section>
+
+
+        <!-- ================= STAKEHOLDER TAB: ARCHITECTURE & TECH LEAD ================= -->
+        <section id="tab-engineering" class="space-y-6 hidden">
+          
+          <div class="bg-gradient-to-r from-purple-50/90 via-indigo-50/50 to-white text-slate-900 border border-purple-200 rounded-2xl p-7 shadow-xs space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase tracking-widest text-purple-800 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
+                ⚙️ Enterprise Architecture & CISO Lens · Slide 5
+              </span>
+              <span class="text-xs text-slate-500 font-mono">Priya Sharma (Architect) & Sarah Jenkins (Ops Head)</span>
+            </div>
+            <h2 class="text-3xl font-black tracking-tight text-slate-900">One-Way Doors vs Two-Way Doors Matrix</h2>
+            <p class="text-sm text-slate-600 max-w-3xl leading-relaxed">
+              Slide 5 Principle: Architecture needs decisions recorded, one-way doors flagged. Security needs data flows, consent, and least privilege. Engineering needs clear priorities and unblocked access.
+            </p>
+          </div>
+
+          <!-- Infrastructure KPIs -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Two-Way Doors</div>
+              <div class="text-3xl font-black text-blue-700">6 Decisions</div>
+              <div class="text-xs text-emerald-700 font-semibold mt-1">Reversible operational calls</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">One-Way Doors</div>
+              <div class="text-3xl font-black text-amber-600">2 Decisions</div>
+              <div class="text-xs text-amber-800 font-bold mt-1">Irreversible policy boundaries</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Quota Cap Status</div>
+              <div class="text-3xl font-black text-emerald-700">40% &rarr; 100%</div>
+              <div class="text-xs text-slate-500 mt-1">Vertex Gemini overflow active</div>
+            </div>
+
+            <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs space-y-1">
+              <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Dev Data Isolation</div>
+              <div class="text-3xl font-black text-purple-700">100% Synthetic</div>
+              <div class="text-xs text-purple-700 font-semibold mt-1">Zero customer statement leaks</div>
+            </div>
+          </div>
+
+          <!-- One-Way vs Two-Way Door Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+              <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                <span class="text-lg">🚪</span>
+                <div>
+                  <h4 class="text-base font-bold text-slate-900">Two-Way Doors (Reversible)</h4>
+                  <p class="text-xs text-slate-500">Fast, decentralized decisions that can be undone without permanent risk.</p>
+                </div>
+              </div>
+              <ul class="text-xs text-slate-700 space-y-2.5">
+                <li class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <strong>Quota Overflow Routing (DEC-01):</strong> Dynamic load-balancing across Vertex Gemini and Azure OpenAI.
+                </li>
+                <li class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <strong>Dual-Intake Fallback (DEC-03):</strong> OCR extraction on uploaded statements while AA consent clears Legal.
+                </li>
+                <li class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <strong>Critic Gated Sampling (DEC-04):</strong> 100% initial verification shifting to 20% audit sampling.
+                </li>
+                <li class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <strong>Format C Recalibration (DEC-07):</strong> Temperature dropped to 0.05 and prompt refined in Agent Toner.
+                </li>
+              </ul>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-3">
+              <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                <span class="text-lg">🔒</span>
+                <div>
+                  <h4 class="text-base font-bold text-slate-900">One-Way Doors (Irreversible Policies)</h4>
+                  <p class="text-xs text-slate-500">Flagged decisions that create irreversible regulatory or security exposure.</p>
+                </div>
+              </div>
+              <ul class="text-xs text-slate-700 space-y-2.5">
+                <li class="p-3 bg-rose-50/70 rounded-xl border border-rose-200">
+                  <div class="font-bold text-rose-900">ADR-001: Mandatory Human Sign-Off (DEC-02)</div>
+                  <p class="mt-0.5 text-slate-600">Once autonomous lending is turned on, bank incurs irreversible regulatory liability under FCA/RBI. Locked as a one-way door: AI never signs.</p>
+                </li>
+                <li class="p-3 bg-rose-50/70 rounded-xl border border-rose-200">
+                  <div class="font-bold text-rose-900">Dev Synthetic Data Mandate (DEC-06)</div>
+                  <p class="mt-0.5 text-slate-600">Real customer statements are strictly prohibited from non-production environments. Synthetic data generator enforced at gateway level.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ================= PILLAR 5: VIRTUSA MODULE 8 WAR ROOM & DECISION LOG ================= -->
+        <section id="tab-warroom" class="space-y-6 hidden">
+          
+          <!-- War Room Mission Banner (Slide 1 & 4) - Light Mode -->
+          <div class="bg-gradient-to-r from-amber-50/90 via-orange-50/40 to-white text-slate-900 border border-amber-200 rounded-2xl p-7 shadow-xs space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <span class="text-xs font-black uppercase tracking-widest text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-600 animate-ping"></span>
+                Module 8 · Delivery Leadership War Room
+              </span>
+              <span class="text-xs text-slate-500 font-mono">Lead FDE Programme · Virtusa · Tue 17 Nov 2026</span>
+            </div>
+
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 pt-2">
+              <div>
+                <h2 class="text-3xl font-black tracking-tight text-slate-900">Decide &bull; Communicate &bull; Unblock</h2>
+                <p class="text-sm text-slate-600 mt-1.5 max-w-2xl leading-relaxed">
+                  The War Room: Kestrel pilot, week 3. One region, six weeks. The slice: statement and GST extraction, one document request, a person decides.
+                </p>
+              </div>
+            </div>
+
+            <!-- The 4 Core Numbers from Slide 4 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-amber-200/70">
+              <div class="bg-white border border-amber-200 rounded-xl p-3.5 text-center shadow-2xs">
+                <div class="text-3xl font-black text-amber-800 font-mono">18 &rarr; 9</div>
+                <div class="text-xs text-slate-600 mt-1 font-medium">working days to a decision – the pilot target</div>
+              </div>
+              <div class="bg-white border border-blue-200 rounded-xl p-3.5 text-center shadow-2xs">
+                <div class="text-3xl font-black text-blue-700 font-mono">7</div>
+                <div class="text-xs text-slate-600 mt-1 font-medium">functions that must move together</div>
+              </div>
+              <div class="bg-white border border-emerald-200 rounded-xl p-3.5 text-center shadow-2xs">
+                <div class="text-3xl font-black text-emerald-700 font-mono">8</div>
+                <div class="text-xs text-slate-600 mt-1 font-medium">injects across two rounds</div>
+              </div>
+              <div class="bg-white border border-purple-200 rounded-xl p-3.5 text-center shadow-2xs">
+                <div class="text-3xl font-black text-purple-700 font-mono">0</div>
+                <div class="text-xs text-slate-600 mt-1 font-medium">lines of code today (Delivery Leadership)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section A: The War-Room Decision Log (Slide 7) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+              <div>
+                <span class="text-xs font-bold text-blue-700 uppercase tracking-wider">Slide 7: The Master Record</span>
+                <h3 class="text-xl font-bold text-slate-900 mt-0.5">War-Room Decision Log</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Every decision with an owner, an audience, and reversibility for every call.</p>
+              </div>
+
+              <!-- Filter Buttons -->
+              <div class="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-xl text-xs font-semibold">
+                <button onclick="filterDecisions('all')" id="flt-all" class="px-3 py-1 rounded-lg bg-white text-slate-900 shadow-2xs font-bold">
+                  All Injects (8)
+                </button>
+                <button onclick="filterDecisions('round1')" id="flt-round1" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900">
+                  Round 1: Scope & Quota (4)
+                </button>
+                <button onclick="filterDecisions('round2')" id="flt-round2" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900">
+                  Round 2: Escalations (4)
+                </button>
+                <button onclick="filterDecisions('twoway')" id="flt-twoway" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900">
+                  Two-Way (6)
+                </button>
+                <button onclick="filterDecisions('oneway')" id="flt-oneway" class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900">
+                  One-Way (2)
+                </button>
+              </div>
+            </div>
+
+            <!-- Decisions Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse">
+                <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-xs border-b border-slate-200">
+                  <tr>
+                    <th class="p-3.5">Inject / Trigger</th>
+                    <th class="p-3.5">Decision</th>
+                    <th class="p-3.5">Owner</th>
+                    <th class="p-3.5">Reversible?</th>
+                    <th class="p-3.5">Who We Told</th>
+                    <th class="p-3.5">By When</th>
+                    <th class="p-3.5 text-center">Status</th>
+                    <th class="p-3.5 text-center">Escalation</th>
+                  </tr>
+                </thead>
+                <tbody id="warroom-decisions-tbody" class="divide-y divide-slate-100 text-slate-800 text-xs">
+                  <!-- Rendered via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section B: Same News, Three Audiences (Slide 11) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-3">
+              <div>
+                <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider">Virtusa Slide 11: Multi-Stakeholder Translation</span>
+                <h3 class="text-xl font-bold text-slate-900 mt-0.5">Same News, Three Audiences</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Select any incident to see how the same factual data is communicated to each stakeholder.</p>
+              </div>
+
+              <!-- Inject Selector Dropdown -->
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-slate-600">Select Inject:</span>
+                <select id="audience-inject-selector" onchange="updateAudienceView(this.value)" class="text-xs font-semibold bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 outline-none text-slate-800 focus:ring-1 focus:ring-blue-600">
+                  <option value="DEC-07">Inject 7: Trust Slipping (35% Edits on Bank Format C)</option>
+                  <option value="DEC-01">Inject 1: Quota Cap (Azure OpenAI 40% Volume Limit)</option>
+                  <option value="DEC-02">Inject 2: Scope Pressure (Auto-Approve Loans &lt;₹5L)</option>
+                  <option value="DEC-03">Inject 3: Blocked Consent (Legal 10-day AA Delay)</option>
+                  <option value="DEC-04">Inject 4: Model Risk (6-Week Validation Freeze)</option>
+                  <option value="DEC-05">Inject 5: Sales vs Credit Ops (RMs Refuse Checklist)</option>
+                  <option value="DEC-06">Inject 6: Security Breach (Real Statement in Dev)</option>
+                  <option value="DEC-08">Inject 8: Date Moves (Steering Committee Earlier)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- The 3 Audience Perspective Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Audience 1: Analysts -->
+              <div class="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-bold uppercase tracking-wider text-blue-800 flex items-center gap-1.5">
+                    <span>📋</span> Analysts Audience
+                  </div>
+                  <span class="text-xs font-mono bg-blue-100 text-blue-900 px-2 py-0.5 rounded">Operational</span>
+                </div>
+                <div class="text-xs font-semibold text-slate-500 uppercase">What they need to hear:</div>
+                <div class="text-xs text-slate-600 italic">"Which format is affected, what to check today, how to flag it."</div>
+                <div id="card-audience-analyst" class="p-3.5 bg-white rounded-xl border border-blue-200 text-xs text-slate-800 leading-relaxed font-medium">
+                  Loading...
+                </div>
+              </div>
+
+              <!-- Audience 2: CRO -->
+              <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                    <span>🛡️</span> CRO & Risk Audience
+                  </div>
+                  <span class="text-xs font-mono bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">Governance</span>
+                </div>
+                <div class="text-xs font-semibold text-slate-500 uppercase">What they need to hear:</div>
+                <div class="text-xs text-slate-600 italic">"The risk, the control that caught it, and that a person still decides."</div>
+                <div id="card-audience-cro" class="p-3.5 bg-white rounded-xl border border-emerald-200 text-xs text-slate-800 leading-relaxed font-medium">
+                  Loading...
+                </div>
+              </div>
+
+              <!-- Audience 3: CEO -->
+              <div class="bg-purple-50/70 border border-purple-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-bold uppercase tracking-wider text-purple-800 flex items-center gap-1.5">
+                    <span>👔</span> CEO & Business Audience
+                  </div>
+                  <span class="text-xs font-mono bg-purple-100 text-purple-900 px-2 py-0.5 rounded">Strategic</span>
+                </div>
+                <div class="text-xs font-semibold text-slate-500 uppercase">What they need to hear:</div>
+                <div class="text-xs text-slate-600 italic">"The effect on the 18 &rarr; 9 outcome, what we're doing, and the decision we need."</div>
+                <div id="card-audience-ceo" class="p-3.5 bg-white rounded-xl border border-purple-200 text-xs text-slate-800 leading-relaxed font-medium">
+                  Loading...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section C: Seven Functions, One Outcome (Slide 5) -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
+            <div class="border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Slide 5: Functional Alignment</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-0.5">Seven Functions, One Outcome</h3>
+              <p class="text-xs text-slate-500 mt-0.5">How all 7 banking functions coordinate around the 18 &rarr; 9 working days target.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-blue-800">1. Engineering</div>
+                <p class="text-slate-600"><strong>Needs:</strong> Clear priorities and unblocked access.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> Multi-cloud model gateway; Claude backup ready.</div>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-indigo-800">2. Architecture</div>
+                <p class="text-slate-600"><strong>Needs:</strong> Decisions recorded, one-way doors flagged.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> ADR-001 one-way door registry & reversible two-way doors.</div>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-emerald-800">3. Product</div>
+                <p class="text-slate-600"><strong>Needs:</strong> The measure and what's out of scope.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> 18&rarr;9 working days KPI; auto-approval kept out of scope.</div>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-amber-800">4. Business</div>
+                <p class="text-slate-600"><strong>Needs:</strong> The 18 &rarr; 9 story and no surprises.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> CEO executive view, 9.2 days achieved, drop-off down to 4.2%.</div>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-rose-800">5. Security & Data</div>
+                <p class="text-slate-600"><strong>Needs:</strong> Data flows, consent, and least privilege.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> RBAC headers, synthetic data masking in dev, zero LLM leaks.</div>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <div class="font-bold text-purple-800">6. Operations</div>
+                <p class="text-slate-600"><strong>Needs:</strong> A runbook and who to call.</p>
+                <div class="text-slate-500 pt-1 border-t border-slate-200/60 mt-1"><strong>Delivered:</strong> Incident runbooks, automated gap checklists, failover triggers.</div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+      </main>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= JAVASCRIPT APPLICATION LOGIC ================= -->
+  <script>
+    // State Management
+    let currentProfileKey = "elena";
+    let lastActionId = null;
+    let lastAgentId = null;
+    let lastAgentOutput = null;
+
+    const AUTH_PROFILES = {
+      "elena": {
+        name: "Elena Gomez",
+        role: "analyst",
+        token: "token-elena-analyst",
+        apiKey: "northgate-analyst-key-101"
+      },
+      "sarah": {
+        name: "Sarah Jenkins",
+        role: "ops_lead",
+        token: "token-sarah-ops",
+        apiKey: "northgate-ops-key-202"
+      },
+      "david": {
+        name: "David Ross",
+        role: "mlro",
+        token: "token-david-mlro",
+        apiKey: "northgate-mlro-key-303"
+      },
+      "priya": {
+        name: "Priya Sharma",
+        role: "admin",
+        token: "token-priya-admin",
+        apiKey: "northgate-admin-key-999"
+      },
+      "unauthorized": {
+        name: "Not Authenticated",
+        role: "none",
+        token: "",
+        apiKey: ""
+      }
+    };
+
+    const PERSONA_DETAILS = {
+      "elena": {
+        avatar: "EG",
+        avatarBg: "bg-blue-700",
+        name: "Elena Gomez",
+        role: "analyst",
+        rolePill: "KYC Analyst",
+        desc: "London Operations · Responsible for entity structure analysis, document gap checks, and fact confirmation (Sign 1).",
+        permitted: "Check Ownership, Detect Gaps, Sign Facts",
+        blocked: "Sign Risk (David Ross, MLRO only)",
+        signRiskText: "Sign 3: Sign Risk (MLRO Only - Blocked)",
+        signRiskClass: "px-4 py-3 bg-slate-100 text-slate-400 border border-slate-200 rounded-xl text-xs font-semibold cursor-not-allowed opacity-60 text-center leading-snug"
+      },
+      "sarah": {
+        avatar: "SJ",
+        avatarBg: "bg-indigo-700",
+        name: "Sarah Jenkins",
+        role: "ops_lead",
+        rolePill: "Operations Head",
+        desc: "KYC Operations Sponsor · Oversees operational cycle times, tunes individual agent models, and tests system reliability.",
+        permitted: "Model Tuning, Reliability Test, Case Review",
+        blocked: "Sign Risk (David Ross, MLRO only)",
+        signRiskText: "Sign 3: Sign Risk (MLRO Only - Blocked)",
+        signRiskClass: "px-4 py-3 bg-slate-100 text-slate-400 border border-slate-200 rounded-xl text-xs font-semibold cursor-not-allowed opacity-60 text-center leading-snug"
+      },
+      "david": {
+        avatar: "DR",
+        avatarBg: "bg-emerald-700",
+        name: "David Ross",
+        role: "mlro",
+        rolePill: "Compliance / MLRO",
+        desc: "Money Laundering Reporting Officer · Personally accountable under SMCR. Authorized to approve final AML Risk Ratings.",
+        permitted: "Sign 3 (Risk Approval), Quality Review Audit",
+        blocked: "None (MLRO Authorized Signer)",
+        signRiskText: "Sign 3: Approve Risk Rating (MLRO Active)",
+        signRiskClass: "px-4 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition shadow-xs text-center leading-snug"
+      },
+      "priya": {
+        avatar: "PS",
+        avatarBg: "bg-purple-700",
+        name: "Priya Sharma",
+        role: "admin",
+        rolePill: "Administrator",
+        desc: "Enterprise Architect · Manages AI Gateway, swaps models outside the system, tests failover resilience.",
+        permitted: "All operations, Model Toner, Reliability Tests",
+        blocked: "None (Platform Admin)",
+        signRiskText: "Sign 3: Sign Risk (Admin Override)",
+        signRiskClass: "px-4 py-3 bg-purple-700 hover:bg-purple-800 text-white rounded-xl text-xs font-bold transition shadow-xs text-center leading-snug"
+      }
+    };
+
+    function getHeaders() {
+      const p = AUTH_PROFILES[currentProfileKey] || AUTH_PROFILES["elena"];
+      return {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${p.token}`,
+        "X-API-Key": p.apiKey
+      };
+    }
+
+    async function submitPasswordLogin() {
+      const username = document.getElementById("login-username").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const errBox = document.getElementById("login-error");
+      const btn = document.getElementById("btn-submit-login");
+
+      errBox.classList.add("hidden");
+      if (!username || !password) {
+        errBox.innerText = "Please enter both username and password.";
+        errBox.classList.remove("hidden");
+        return;
+      }
+
+      btn.innerText = "Authenticating with Bank Gateway...";
+      try {
+        const resp = await fetch("/api/v1/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: username, password: password })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          errBox.innerText = err.detail || "Authentication Failed: Invalid credentials.";
+          errBox.classList.remove("hidden");
+          return;
+        }
+
+        const data = await resp.json();
+        let key = "elena";
+        if (data.username.includes("sarah")) key = "sarah";
+        if (data.username.includes("david")) key = "david";
+        if (data.username.includes("priya")) key = "priya";
+
+        selectPersonaAndSignIn(key);
+      } catch (e) {
+        errBox.innerText = "Connection error: " + e.message;
+        errBox.classList.remove("hidden");
+      } finally {
+        btn.innerText = "🔑 Authenticate & Open Session";
+      }
+    }
+
+    function selectPersonaAndSignIn(key) {
+      currentProfileKey = key;
+      const p = AUTH_PROFILES[key];
+      const d = PERSONA_DETAILS[key] || PERSONA_DETAILS["elena"];
+
+      const creds = {
+        "elena": { u: "elena.gomez", p: "Analyst@2026!" },
+        "sarah": { u: "sarah.jenkins", p: "OpsLead@2026!" },
+        "david": { u: "david.ross", p: "MLRO@2026!" },
+        "priya": { u: "priya.sharma", p: "Admin@2026!" }
+      }[key];
+      if (creds && document.getElementById("login-username")) {
+        document.getElementById("login-username").value = creds.u;
+        document.getElementById("login-password").value = creds.p;
+      }
+      
+      document.getElementById("login-view").classList.add("hidden");
+      document.getElementById("app-view").classList.remove("hidden");
+
+      // Update Top Nav Auth Bar & Sidebar
+      document.getElementById("auth-profile-select").value = key;
+      
+      document.getElementById("sidebar-user-name").innerText = p.name;
+      document.getElementById("sidebar-user-role").innerText = d.rolePill;
+      document.getElementById("sidebar-avatar").innerText = d.avatar;
+      document.getElementById("sidebar-avatar").className = `w-9 h-9 rounded-full ${d.avatarBg} flex items-center justify-center font-bold text-white text-sm shadow-2xs`;
+
+      const signRiskBtn = document.getElementById("btn-sign-risk");
+      if (signRiskBtn) {
+        signRiskBtn.innerText = d.signRiskText;
+        signRiskBtn.className = d.signRiskClass;
+      }
+
+      document.getElementById("hdr-auth").innerText = "Bearer " + p.token;
+      document.getElementById("hdr-key").innerText = p.apiKey;
+    }
+
+    function handleSignOut() {
+      currentProfileKey = "unauthorized";
+      
+      document.getElementById("app-view").classList.add("hidden");
+      document.getElementById("login-view").classList.remove("hidden");
+      
+      document.getElementById("hdr-auth").innerText = "(None - Session Cleared)";
+      document.getElementById("hdr-key").innerText = "(None - Session Cleared)";
+    }
+
+    function changeAuthProfile() {
+      const key = document.getElementById("auth-profile-select").value;
+      selectPersonaAndSignIn(key);
+    }
+
+    function openSignInModal() {
+      handleSignOut();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.remove("hidden");
+
+      const navIds = ["nav-workbench", "nav-toner", "nav-governance", "nav-headers", "nav-warroom"];
+      navIds.forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = "w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 text-slate-600 hover:bg-slate-100/80 border border-transparent hover:border-slate-200 group";
+          const title = btn.querySelector(".nav-item-title");
+          if (title) title.className = "nav-item-title text-sm font-bold text-slate-800";
+          const sub = btn.querySelector(".nav-item-sub");
+          if (sub) sub.className = "nav-item-sub text-xs text-slate-500 font-normal mt-0.5 leading-snug";
+        }
+      });
+
+      const navBtnMap = {
+        "tab-workbench": "nav-workbench",
+        "tab-toner": "nav-toner",
+        "tab-governance": "nav-governance",
+        "tab-headers": "nav-headers",
+        "tab-warroom": "nav-warroom"
+      };
+      const activeBtn = document.getElementById(navBtnMap[tabId]);
+      if (activeBtn) {
+        activeBtn.className = "w-full text-left p-4 rounded-xl transition flex items-start gap-3.5 bg-blue-50 text-blue-700 border border-blue-200 shadow-2xs font-bold group";
+        const title = activeBtn.querySelector(".nav-item-title");
+        if (title) title.className = "nav-item-title text-sm font-bold text-blue-700";
+        const sub = activeBtn.querySelector(".nav-item-sub");
+        if (sub) sub.className = "nav-item-sub text-xs text-blue-600 font-normal mt-0.5 leading-snug";
+      }
+
+      // Update Top Stakeholder Lens Buttons
+      const lensMap = {
+        "tab-ceo": "lens-btn-ceo",
+        "tab-workbench": "lens-btn-analyst",
+        "tab-cro": "lens-btn-cro",
+        "tab-engineering": "lens-btn-engineering",
+        "tab-warroom": "lens-btn-warroom"
+      };
+      ["lens-btn-ceo", "lens-btn-analyst", "lens-btn-cro", "lens-btn-engineering", "lens-btn-warroom"].forEach(lid => {
+        const lb = document.getElementById(lid);
+        if (!lb) return;
+        if (lid === "lens-btn-warroom") {
+          lb.className = (lensMap[tabId] === lid)
+            ? "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-amber-600 text-white font-bold shadow-xs border border-amber-600"
+            : "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 shadow-2xs";
+        } else {
+          lb.className = (lensMap[tabId] === lid)
+            ? "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-blue-600 text-white border border-blue-600 shadow-xs"
+            : "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 shadow-2xs";
+        }
+      });
+
+      if (tabId === "tab-toner") loadAgentTonerTable();
+      if (tabId === "tab-governance") refreshGovernanceData();
+      if (tabId === "tab-warroom" || tabId === "tab-ceo" || tabId === "tab-cro" || tabId === "tab-engineering") loadWarRoomData();
+    }
+
+    function toggleRawView() {
+      const wrap = document.getElementById("raw-json-wrapper");
+      const btn = document.getElementById("btn-toggle-raw");
+      if (wrap.classList.contains("hidden")) {
+        wrap.classList.remove("hidden");
+        btn.innerHTML = "<span>▼ Hide Technical Audit Data (Raw JSON)</span>";
+      } else {
+        wrap.classList.add("hidden");
+        btn.innerHTML = "<span>▶ Show Technical Audit Data (Raw JSON)</span>";
+      }
+    }
+
+    // ================= PRIMARY AGENTS EXECUTION =================
+
+    // Agent 1: Identify Beneficial Owners (UBO)
+    async function runUBOExtraction() {
+      if (currentProfileKey === "unauthorized") {
+        alert("🔒 Access Denied: Please sign in with staff credentials first.");
+        return;
+      }
+      const btn = document.getElementById("btn-run-ubo");
+      btn.innerText = "Analyzing filings...";
+      try {
+        const resp = await fetch("/api/v1/agents/extract-ubos", {
+          method: "POST",
+          headers: getHeaders(),
+          body: JSON.stringify({ case_id: "NCB-CASE-7891" })
+        });
+        
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Security Error (" + resp.status + "): " + err.detail);
+          return;
+        }
+
+        const data = await resp.json();
+        handleAgentSuccess(data, "Corporate Ownership & Beneficial Owners (UBO >25%)");
+      } catch (e) {
+        alert("Request error: " + e.message);
+      } finally {
+        btn.innerText = "🏢 Identify Beneficial Owners (UBO)";
+      }
+    }
+
+    // Agent 2: Missing Documents Review & Outreach
+    async function runGapDetector() {
+      if (currentProfileKey === "unauthorized") {
+        alert("🔒 Access Denied: Please sign in with staff credentials first.");
+        return;
+      }
+      const btn = document.getElementById("btn-run-gap");
+      btn.innerText = "Reviewing dossier...";
+      try {
+        const resp = await fetch("/api/v1/agents/detect-gaps", {
+          method: "POST",
+          headers: getHeaders(),
+          body: JSON.stringify({ case_id: "NCB-CASE-7891" })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Security Error (" + resp.status + "): " + err.detail);
+          return;
+        }
+
+        const data = await resp.json();
+        handleAgentSuccess(data, "Missing Documents Review & Draft Client Outreach");
+      } catch (e) {
+        alert("Request error: " + e.message);
+      } finally {
+        btn.innerText = "📋 Review Missing Documents";
+      }
+    }
+
+    function handleAgentSuccess(data, title) {
+      lastActionId = data.action_id;
+      lastAgentId = data.agent_id;
+      lastAgentOutput = data.content;
+
+      document.getElementById("agent-output-title").innerText = title;
+      document.getElementById("agent-json-content").innerText = data.content;
+      document.getElementById("trace-info-box").classList.remove("hidden");
+      document.getElementById("trace-action-id").innerText = data.action_id;
+      document.getElementById("trace-owner").innerText = data.agent_owner;
+      document.getElementById("trace-model").innerText = data.model_used + " (" + data.provider + ")";
+      document.getElementById("trace-cost").innerText = "$" + data.cost_usd.toFixed(6);
+      document.getElementById("trace-latency").innerText = data.latency_ms;
+
+      const badgeArea = document.getElementById("output-meta-badges");
+      const fallbackBanner = document.getElementById("fallback-alert-banner");
+      if (data.is_fallback) {
+        badgeArea.innerHTML = `<span class="text-xs px-3.5 py-1 rounded-full font-bold bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs flex items-center gap-1.5">🛡️ BACKUP AI: ${data.model_used}</span>`;
+        if (fallbackBanner) {
+          fallbackBanner.classList.remove("hidden");
+          document.getElementById("fallback-banner-model").innerText = data.model_used + " (" + data.provider + ")";
+          document.getElementById("fallback-banner-reason").innerText = data.fallback_reason || "HTTP 429 Quota Exceeded";
+        }
+      } else {
+        badgeArea.innerHTML = `<span class="text-xs px-3.5 py-1 rounded-full font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 flex items-center gap-1.5">✔ PRIMARY AI: ${data.model_used}</span>`;
+        if (fallbackBanner) {
+          fallbackBanner.classList.add("hidden");
+        }
+      }
+
+      renderBusinessView(data.content);
+
+      document.getElementById("btn-run-critic").disabled = false;
+      document.getElementById("signoff-status-msg").innerText = "";
+      refreshGovernanceData();
+    }
+
+    function renderBusinessView(contentStr) {
+      const emptyState = document.getElementById("agent-empty-state");
+      const container = document.getElementById("agent-formatted-content");
+      
+      emptyState.classList.add("hidden");
+      container.classList.remove("hidden");
+
+      let parsed = null;
+      try {
+        parsed = JSON.parse(contentStr);
+      } catch (e) {
+        container.innerHTML = `<div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700">${contentStr}</div>`;
+        return;
+      }
+
+      if (parsed.ownership_chain || parsed.ubos_identified) {
+        let html = `
+          <div class="bg-blue-50/70 border border-blue-200 p-4 rounded-xl flex items-center justify-between">
+            <div>
+              <div class="font-bold text-slate-900 text-sm">Entity: ${parsed.target_company || parsed.client_name}</div>
+              <div class="text-xs text-slate-600 mt-0.5">Automated Multi-Jurisdiction Ownership Mapping</div>
+            </div>
+            <span class="text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full">
+              ${(parsed.ubos_identified || []).length} Qualified Beneficial Owners Found
+            </span>
+          </div>
+
+          <div class="space-y-2.5">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Corporate Shareholding Chain</h4>
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-slate-50 text-slate-700 font-bold text-xs border-b border-slate-200">
+                  <tr>
+                    <th class="p-3.5">Holding Tier</th>
+                    <th class="p-3.5">Entity Name</th>
+                    <th class="p-3.5">Jurisdiction</th>
+                    <th class="p-3.5">Document Source Citation</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-800">
+                  ${(parsed.ownership_chain || []).map(t => `
+                    <tr>
+                      <td class="p-3.5 font-semibold text-slate-900">${t.tier}</td>
+                      <td class="p-3.5 font-bold text-blue-800">${t.entity_name}</td>
+                      <td class="p-3.5 text-slate-700">${t.jurisdiction}</td>
+                      <td class="p-3.5"><span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded text-xs font-mono font-medium">${t.citation}</span></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-2.5">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Ultimate Beneficial Owners (>25% Statutory Threshold)</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              ${(parsed.ubos_identified || []).map(u => `
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 shadow-2xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900 text-sm">${u.name}</span>
+                    <span class="text-base font-black text-blue-700">${u.effective_percentage}</span>
+                  </div>
+                  <div class="text-xs text-emerald-800 font-bold flex items-center gap-1.5">
+                    <span>✔</span> ${u.status}
+                  </div>
+                  <div class="text-xs text-slate-600 font-mono truncate pt-0.5" title="${u.citation}">
+                    ${u.citation}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-slate-100 rounded-xl text-xs text-slate-700 leading-relaxed border border-slate-200">
+            <strong>ADR-001 Policy Note:</strong> Unsealed draft. Factual citations extracted for analyst review. Final risk rating requires MLRO sign-off.
+          </div>
+        `;
+        container.innerHTML = html;
+        return;
+      }
+
+      if (parsed.gaps_summary || parsed.draft_client_outreach_email) {
+        const sum = parsed.gaps_summary || {};
+        const email = parsed.draft_client_outreach_email || {};
+        let html = `
+          <div class="grid grid-cols-3 gap-4">
+            <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl text-center">
+              <div class="text-2xl font-bold text-rose-700">${sum.total_gaps_found || 2}</div>
+              <div class="text-xs text-rose-900 font-bold mt-1">Missing Items Needed</div>
+            </div>
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-center">
+              <div class="text-2xl font-bold text-emerald-700">${sum.documents_found_in_archive || 2}</div>
+              <div class="text-xs text-emerald-900 font-bold mt-1">Found in Bank Archives</div>
+            </div>
+            <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl text-center">
+              <div class="text-2xl font-bold text-blue-700">${sum.outreach_cycles_needed || 1}</div>
+              <div class="text-xs text-blue-900 font-bold mt-1">Consolidated Email</div>
+            </div>
+          </div>
+
+          <div class="space-y-2.5">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Itemized Document Audit</h4>
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-slate-50 text-slate-700 font-bold text-xs border-b border-slate-200">
+                  <tr>
+                    <th class="p-3.5">Target Entity</th>
+                    <th class="p-3.5">Requirement</th>
+                    <th class="p-3.5">Archive Check</th>
+                    <th class="p-3.5">Action Required</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-800">
+                  ${(parsed.itemized_findings || []).map(item => `
+                    <tr>
+                      <td class="p-3.5 font-bold text-slate-900">${item.target_entity}</td>
+                      <td class="p-3.5 text-slate-700">${item.category}</td>
+                      <td class="p-3.5">
+                        <span class="text-xs ${item.status === 'SATISFIED_FROM_ARCHIVE' ? 'text-emerald-800 font-bold' : 'text-slate-600'}">
+                          ${item.archive_check}
+                        </span>
+                      </td>
+                      <td class="p-3.5 font-semibold ${item.status === 'SATISFIED_FROM_ARCHIVE' ? 'text-emerald-800' : 'text-blue-800'}">
+                        ${item.action_required}
+                      </td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-2.5">
+            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Draft Client Email (For Relationship Manager Review)</h4>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-3 text-sm">
+              <div class="text-slate-700 border-b border-slate-200 pb-2.5 space-y-1">
+                <div><strong>To:</strong> <span class="font-mono text-slate-900 font-semibold">${email.to || "client-onboarding@apexmeridian.com"}</span></div>
+                <div><strong>Subject:</strong> <span class="text-slate-900 font-bold">${email.subject || "CDD Onboarding Requirements"}</span></div>
+              </div>
+              <div class="whitespace-pre-line text-slate-800 leading-relaxed pt-1 text-sm">
+                ${email.body || "Draft email content prepared."}
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML = html;
+        return;
+      }
+
+      container.innerHTML = `<div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700"><pre class="whitespace-pre-wrap">${contentStr}</pre></div>`;
+    }
+
+    async function runCriticVerification() {
+      if (!lastActionId || !lastAgentOutput) return;
+      const btn = document.getElementById("btn-run-critic");
+      btn.innerText = "Checking citations...";
+
+      try {
+        const resp = await fetch("/api/v1/agents/verify-critic", {
+          method: "POST",
+          headers: getHeaders(),
+          body: JSON.stringify({
+            case_id: "NCB-CASE-7891",
+            target_agent_id: lastAgentId,
+            target_action_id: lastActionId,
+            output_text: lastAgentOutput
+          })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Security Error (" + resp.status + "): " + err.detail);
+          return;
+        }
+
+        const data = await resp.json();
+        const crit = JSON.parse(data.content);
+
+        document.getElementById("critic-placeholder").classList.add("hidden");
+        document.getElementById("critic-content-display").classList.remove("hidden");
+        document.getElementById("critic-confidence-score").innerText = crit.confidence_score + " / 100";
+        document.getElementById("critic-verdict-badge").innerText = "✔ " + crit.critic_verdict;
+        document.getElementById("critic-verdict-badge").className = "text-xs px-3.5 py-1 rounded-full font-bold bg-purple-100 text-purple-800 border border-purple-300";
+
+        const citList = document.getElementById("critic-citations-list");
+        citList.innerHTML = crit.citation_grounding.verified_citations.map(c => `
+          <div class="p-3 bg-white border border-slate-200 rounded-xl flex justify-between items-center shadow-2xs">
+            <span class="font-mono text-blue-700 text-xs font-semibold">${c.citation}</span>
+            <span class="text-emerald-700 font-bold text-xs flex items-center gap-1.5">✔ Grounded</span>
+          </div>
+        `).join("");
+
+        const gateList = document.getElementById("critic-gates-list");
+        gateList.innerHTML = crit.regulatory_boundary_evaluation.map(g => `
+          <div class="p-3 bg-white border border-slate-200 rounded-xl flex justify-between items-center shadow-2xs">
+            <span class="font-bold text-slate-800 text-xs">${g.gate}</span>
+            <span class="text-emerald-700 font-bold text-xs">✔ ${g.status}</span>
+          </div>
+        `).join("");
+
+        document.getElementById("critic-notes-text").innerHTML = `<strong class="text-purple-900">Quality Review Summary:</strong> ${crit.critic_summary_note}`;
+
+      } catch (e) {
+        alert("Critic review error: " + e.message);
+      } finally {
+        btn.innerText = "🔍 Run Quality Checker";
+      }
+    }
+
+    async function submitHumanSignoff(signType, decision) {
+      if (!lastActionId) {
+        alert("Please run an agent first to generate a file draft!");
+        return;
+      }
+
+      try {
+        const resp = await fetch("/api/v1/signoff", {
+          method: "POST",
+          headers: getHeaders(),
+          body: JSON.stringify({
+            action_id: lastActionId,
+            signoff_type: signType,
+            decision: decision,
+            signer_notes: "Verified against source filings under ADR-001 protocol."
+          })
+        });
+
+        const res = await resp.json();
+        if (!resp.ok) {
+          alert("Governance Error (" + resp.status + "): " + res.detail);
+          return;
+        }
+
+        document.getElementById("signoff-status-msg").innerText = "✔ " + res.message + " by " + res.signed_by;
+        refreshGovernanceData();
+      } catch (e) {
+        alert("Signoff error: " + e.message);
+      }
+    }
+
+    async function toggleFaultInjection() {
+      const btn = document.getElementById("btn-toggle-outage");
+      const btnWb = document.getElementById("btn-workbench-outage");
+      const isCurrentlyOutage = (btn && btn.innerText.includes("Restore")) || (btnWb && btnWb.innerText.includes("Restore"));
+
+      try {
+        const resp = await fetch("/api/v1/models/fault-injection", {
+          method: "POST",
+          headers: getHeaders(),
+          body: JSON.stringify({ enabled: !isCurrentlyOutage })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Resilience Simulator Error (" + resp.status + "): " + (err.detail || "Action not allowed"));
+          return;
+        }
+
+        const data = await resp.json();
+
+        if (data.simulate_primary_outage) {
+          if (btn) {
+            btn.innerText = "Restore Primary Model";
+            btn.className = "px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-bold shadow-xs transition";
+          }
+          if (btnWb) {
+            btnWb.innerHTML = "<span>🔄 Restore Primary Normal</span>";
+            btnWb.className = "px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5";
+          }
+          document.getElementById("outage-status-indicator").innerText = "STATUS: PRIMARY DEGRADED (Backup Active!)";
+          document.getElementById("outage-status-indicator").className = "text-xs font-bold text-amber-900 bg-amber-100 border border-amber-300 px-3.5 py-2 rounded-xl";
+          const nextSteps = document.getElementById("outage-next-steps");
+          if (nextSteps) nextSteps.classList.remove("hidden");
+        } else {
+          if (btn) {
+            btn.innerText = "Simulate Primary 429 Outage";
+            btn.className = "px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-sm font-bold shadow-xs transition";
+          }
+          if (btnWb) {
+            btnWb.innerHTML = "<span>⚡ Test Backup AI (Simulate 429)</span>";
+            btnWb.className = "px-4 py-2.5 bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5";
+          }
+          document.getElementById("outage-status-indicator").innerText = "STATUS: Primary Normal";
+          document.getElementById("outage-status-indicator").className = "text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-2 rounded-xl";
+          const nextSteps = document.getElementById("outage-next-steps");
+          if (nextSteps) nextSteps.classList.add("hidden");
+        }
+      } catch (e) {
+        alert("Error toggling fault injection: " + e.message);
+      }
+    }
+
+    async function loadAgentTonerTable() {
+      try {
+        const resp = await fetch("/api/v1/governance/agents", { headers: getHeaders() });
+        const agents = await resp.json();
+
+        const tbody = document.getElementById("agent-toner-table-body");
+        tbody.innerHTML = agents.map(a => `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-4">
+              <div class="font-bold text-slate-900 text-sm">${a.name}</div>
+              <div class="font-mono text-xs text-blue-700 font-semibold">${a.agent_id} (v${a.version})</div>
+            </td>
+            <td class="p-4 text-slate-800 text-sm">${a.owner}<br><span class="text-slate-500 text-xs">${a.department}</span></td>
+            <td class="p-4 font-mono text-emerald-700 font-bold text-xs">${a.assigned_primary_model}</td>
+            <td class="p-4 font-mono text-amber-700 font-bold text-xs">${a.assigned_fallback_model}</td>
+            <td class="p-4 font-mono text-slate-700 text-sm">${a.temperature}</td>
+            <td class="p-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold ${a.active ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                ${a.active ? 'ACTIVE' : 'PAUSED'}
+              </span>
+            </td>
+            <td class="p-4 text-right">
+              <button onclick="openTuningModal('${a.agent_id}')" class="px-3.5 py-1.5 bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 rounded-lg text-xs font-bold shadow-2xs transition">
+                ⚙ Tune
+              </button>
+            </td>
+          </tr>
+        `).join("");
+      } catch (e) {
+        console.error("Error loading agents:", e);
+      }
+    }
+
+    let tuningAgentId = null;
+    async function openTuningModal(agentId) {
+      tuningAgentId = agentId;
+      try {
+        const resp = await fetch("/api/v1/governance/agents", { headers: getHeaders() });
+        const agents = await resp.json();
+        const a = agents.find(x => x.agent_id === agentId);
+        if (!a) return;
+
+        document.getElementById("tune-agent-name").innerText = `${a.name} (${a.agent_id})`;
+        document.getElementById("tune-primary-model").value = a.assigned_primary_model;
+        document.getElementById("tune-fallback-model").value = a.assigned_fallback_model;
+        document.getElementById("tune-temp-input").value = a.temperature;
+        document.getElementById("tune-temp-val").innerText = a.temperature;
+
+        document.getElementById("tuning-modal").classList.remove("hidden");
+      } catch (e) {
+        alert("Error loading agent details: " + e.message);
+      }
+    }
+
+    function closeTuningModal() {
+      document.getElementById("tuning-modal").classList.add("hidden");
+      tuningAgentId = null;
+    }
+
+    async function saveAgentTuning() {
+      if (!tuningAgentId) return;
+      const primary = document.getElementById("tune-primary-model").value;
+      const fallback = document.getElementById("tune-fallback-model").value;
+      const temp = parseFloat(document.getElementById("tune-temp-input").value);
+
+      try {
+        const resp = await fetch(`/api/v1/governance/agents/${tuningAgentId}`, {
+          method: "PUT",
+          headers: getHeaders(),
+          body: JSON.stringify({
+            assigned_primary_model: primary,
+            assigned_fallback_model: fallback,
+            temperature: temp
+          })
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert("Tuning Error (" + resp.status + "): " + err.detail);
+          return;
+        }
+
+        alert("✔ Agent settings successfully updated and deployed to runtime!");
+        closeTuningModal();
+        loadAgentTonerTable();
+      } catch (e) {
+        alert("Error saving tuning: " + e.message);
+      }
+    }
+
+    async function refreshGovernanceData() {
+      try {
+        const mResp = await fetch("/api/v1/governance/metrics", { headers: getHeaders() });
+        if (mResp.ok) {
+          const metrics = await mResp.json();
+          const totalActions = metrics.total_actions ?? metrics.total_agent_actions_executed ?? 0;
+          const totalCost = metrics.total_cost_usd ?? 0;
+          const failovers = metrics.fallback_events ?? metrics.total_fallback_events ?? 0;
+          const passRate = metrics.critic_pass_rate_pct ?? 100;
+
+          document.getElementById("kpi-total-actions").innerText = totalActions;
+          document.getElementById("kpi-total-cost").innerText = "$" + Number(totalCost).toFixed(6);
+          document.getElementById("kpi-total-failovers").innerText = failovers;
+          document.getElementById("kpi-critic-pass").innerText = Math.round(Number(passRate)) + "%";
+        }
+
+        const aResp = await fetch("/api/v1/governance/audit-log?limit=30", { headers: getHeaders() });
+        if (!aResp.ok) {
+          console.error("Audit log error:", aResp.status);
+          return;
+        }
+        const logs = await aResp.json();
+        const tbody = document.getElementById("audit-table-body");
+        if (!logs || logs.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8" class="p-8 text-center text-slate-500 font-medium">
+                No case actions recorded yet. Switch to <strong>1. Case Review</strong> and click <strong>"Identify Beneficial Owners"</strong> to generate the first audit trace!
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = logs.map(l => {
+          const timeStr = l.timestamp ? (l.timestamp.includes("T") ? l.timestamp.split("T")[1].slice(0, 8) : l.timestamp) : "";
+          const isFallback = Boolean(l.is_fallback);
+          const isSigned = l.human_signoff_status === 'APPROVED';
+          return `
+            <tr class="hover:bg-slate-50 transition ${isFallback ? 'bg-amber-50/60' : ''}">
+              <td class="p-4">
+                <span class="font-mono font-bold text-blue-700 text-xs">${l.action_id || "ACT-LOG"}</span>
+                <div class="text-xs text-slate-400 mt-0.5">${timeStr}</div>
+              </td>
+              <td class="p-4">
+                <span class="font-bold text-slate-900 text-sm">${l.agent_name || "Agent"}</span>
+                <div class="text-xs text-slate-500">${l.agent_owner || "Northgate Operations"}</div>
+              </td>
+              <td class="p-4">
+                <span class="text-slate-800 font-semibold text-sm">${l.requested_by_user || "Staff"}</span>
+                <div class="text-xs text-slate-400 uppercase">${l.requested_by_role || "Analyst"}</div>
+              </td>
+              <td class="p-4">
+                <span class="font-mono text-slate-800 text-xs font-semibold">${l.model_actual || "gemini"}</span>
+                <div class="text-xs ${isFallback ? 'text-amber-800 font-bold' : 'text-slate-500'}">${l.provider_actual || ""}</div>
+              </td>
+              <td class="p-4 text-right font-mono text-slate-700 text-xs font-medium">${(l.total_tokens || 0).toLocaleString()}</td>
+              <td class="p-4 text-right font-mono font-bold text-emerald-700 text-sm">$${Number(l.cost_usd || 0).toFixed(6)}</td>
+              <td class="p-4 text-center">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isFallback ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-emerald-100 text-emerald-800 border border-emerald-300'}">
+                  ${l.status || "SUCCESS"}
+                </span>
+              </td>
+              <td class="p-4 text-center">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isSigned ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                  ${l.human_signoff_status || "PENDING"}
+                </span>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      } catch (e) {
+        console.error("Error loading audit data:", e);
+      }
+    }
+
+
+    function switchStakeholderLens(lensKey) {
+      if (lensKey === 'ceo') {
+        switchTab('tab-ceo');
+      } else if (lensKey === 'analyst') {
+        selectPersonaAndSignIn('elena');
+        switchTab('tab-workbench');
+      } else if (lensKey === 'cro') {
+        selectPersonaAndSignIn('david');
+        switchTab('tab-cro');
+      } else if (lensKey === 'engineering') {
+        selectPersonaAndSignIn('priya');
+        switchTab('tab-engineering');
+      } else if (lensKey === 'warroom') {
+        switchTab('tab-warroom');
+      }
+    }
+
+    let warRoomDecisions = [];
+    let currentDecisionFilter = 'all';
+
+    async function loadWarRoomData() {
+      try {
+        const [dResp, sResp] = await Promise.all([
+          fetch("/api/v1/war-room/decisions", { headers: getHeaders() }),
+          fetch("/api/v1/war-room/stakeholder-data", { headers: getHeaders() })
+        ]);
+
+        if (dResp.ok) {
+          warRoomDecisions = await dResp.json();
+          renderDecisionLog(currentDecisionFilter);
+          const sel = document.getElementById("audience-inject-selector");
+          if (sel && sel.value) {
+            updateAudienceView(sel.value);
+          } else if (warRoomDecisions.length > 0) {
+            updateAudienceView(warRoomDecisions[0].decision_id);
+          }
+        }
+
+        if (sResp.ok) {
+          const sData = await sResp.json();
+          const ceoAvg = document.getElementById("ceo-avg-cost");
+          if (ceoAvg && sData.ceo_view) {
+            ceoAvg.innerText = sData.ceo_view.total_cost_per_file || "$0.00311";
+          }
+        }
+      } catch (e) {
+        console.error("Error loading war room data:", e);
+      }
+    }
+
+    function filterDecisions(filterType) {
+      currentDecisionFilter = filterType;
+      ["flt-all", "flt-round1", "flt-round2", "flt-twoway", "flt-oneway"].forEach(id => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        const matches = (id === "flt-" + filterType);
+        btn.className = matches 
+          ? "px-3 py-1 rounded-lg bg-white text-slate-900 shadow-2xs font-bold" 
+          : "px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900";
+      });
+      renderDecisionLog(filterType);
+    }
+
+    function renderDecisionLog(filterType) {
+      const tbody = document.getElementById("warroom-decisions-tbody");
+      if (!tbody) return;
+
+      let list = warRoomDecisions || [];
+      if (filterType === 'round1') list = list.filter(d => d.round_num === 1);
+      else if (filterType === 'round2') list = list.filter(d => d.round_num === 2);
+      else if (filterType === 'twoway') list = list.filter(d => (d.door_type || "").toLowerCase().includes("two-way"));
+      else if (filterType === 'oneway') list = list.filter(d => (d.door_type || "").toLowerCase().includes("one-way"));
+
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-500 font-medium">No decisions matching filter.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(d => {
+        const isOneWay = (d.door_type || "").toLowerCase().includes("one-way");
+        return `
+          <tr class="hover:bg-slate-50 transition ${isOneWay ? 'bg-amber-50/40' : ''}">
+            <td class="p-3.5 font-medium">
+              <span class="font-mono font-bold text-blue-700">${d.decision_id}</span>
+              <div class="font-bold text-slate-900 text-xs mt-0.5">${d.inject_title}</div>
+              <div class="text-[11px] text-slate-500 mt-0.5 leading-snug">${d.inject_description}</div>
+            </td>
+            <td class="p-3.5 font-medium text-slate-800 leading-snug">
+              ${d.decision_summary}
+            </td>
+            <td class="p-3.5 font-semibold text-slate-700 whitespace-nowrap">
+              ${d.owner}
+            </td>
+            <td class="p-3.5 whitespace-nowrap">
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-bold ${isOneWay ? 'bg-rose-100 text-rose-800 border border-rose-200' : 'bg-blue-100 text-blue-800 border border-blue-200'}">
+                ${isOneWay ? '🔒 One-way door' : '🚪 Two-way door'}
+              </span>
+            </td>
+            <td class="p-3.5 text-slate-600 text-[11px] leading-snug">
+              ${d.who_we_told}
+            </td>
+            <td class="p-3.5 font-semibold text-slate-700 whitespace-nowrap">
+              ${d.by_when}
+            </td>
+            <td class="p-3.5 text-center">
+              <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                ${d.status || 'RESOLVED'}
+              </span>
+            </td>
+            <td class="p-3.5 text-center whitespace-nowrap">
+              <button onclick="showEscalationModal('${d.decision_id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold transition">
+                Options &rarr;
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function updateAudienceView(decisionId) {
+      const d = warRoomDecisions.find(item => item.decision_id === decisionId);
+      if (!d) return;
+
+      const cAnalyst = document.getElementById("card-audience-analyst");
+      const cCro = document.getElementById("card-audience-cro");
+      const cCeo = document.getElementById("card-audience-ceo");
+
+      if (cAnalyst) cAnalyst.innerText = d.audience_analyst || "N/A";
+      if (cCro) cCro.innerText = d.audience_cro || "N/A";
+      if (cCeo) cCeo.innerText = d.audience_ceo || "N/A";
+    }
+
+    function showEscalationModal(decisionId) {
+      const d = warRoomDecisions.find(item => item.decision_id === decisionId);
+      if (!d) return;
+
+      let optsText = (d.escalation_options || []).map(o => `• ${o.option}\n  Trade-off: ${o.tradeoff}`).join("\n\n");
+      alert(
+        `🚨 STRONG ESCALATION (Virtusa Slide 9 Framework)\n` +
+        `----------------------------------------\n` +
+        `INJECT: ${d.inject_title} (${d.decision_id})\n\n` +
+        `1. SITUATION & IMPACT ON 18 → 9 TARGET:\n${d.situation_and_impact}\n\n` +
+        `2. THREE OPTIONS WITH TRADE-OFFS:\n${optsText}\n\n` +
+        `3. OUR RECOMMENDATION:\n${d.recommendation}\n\n` +
+        `4. DECISION NEEDED BY:\n${d.decision_needed_by}`
+      );
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      selectPersonaAndSignIn("elena");
+      refreshGovernanceData();
+      loadAgentTonerTable();
+      loadWarRoomData();
+    });
+  </script>
+</body>
+</html>

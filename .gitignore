@@ -1,0 +1,22 @@
+# Binaries and executables
+cloudflared.exe
+*.exe
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+.venv/
+env/
+venv/
+
+# Temporary / Scratch text files
+scratch_*.txt
+full_step*.txt
+*.log
+
+# OS & Environment
+.env
+.DS_Store
+Thumbs.db

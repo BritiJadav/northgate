@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northgate Corporate Bank - Discover & Shape Presentation Pack</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      .page-card { 
+        page-break-after: always !important; 
+        break-after: page !important;
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+        margin-bottom: 0 !important;
+      }
+      body { background-color: #ffffff !important; color: #0f172a !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased p-3 md:p-8">
+
+  <!-- Header & Toolbar -->
+  <header class="max-w-6xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-4 gap-4 no-print">
+    <div>
+      <div class="flex items-center gap-3">
+        <span class="bg-indigo-600 text-white font-black text-xl px-2.5 py-1 rounded shadow">NCB</span>
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight text-white">Northgate Corporate Bank: Discover & Shape Pack</h1>
+          <p class="text-xs text-slate-400">Virtusa Lead FDE Programme · Modules 2 & 3 Simulation · Presentable Guide Deliverable</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.print()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow transition">
+        <span>🖨 Print / Save as PDF</span>
+      </button>
+      <button onclick="toggleAllPages()" id="btn-toggle-all" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow transition">
+        View All 6 Pages
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Slide / Page Switcher Tabs -->
+  <nav class="max-w-6xl mx-auto mb-6 no-print">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+      <button onclick="showPage(1)" id="tab-1" class="tab-btn active px-3 py-2 rounded-lg text-xs font-semibold transition bg-indigo-600 text-white shadow">
+        1. The Problem
+      </button>
+      <button onclick="showPage(2)" id="tab-2" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white hover:bg-slate-800">
+        2. Evidence Log
+      </button>
+      <button onclick="showPage(3)" id="tab-3" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white hover:bg-slate-800">
+        3. Opportunities
+      </button>
+      <button onclick="showPage(4)" id="tab-4" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white hover:bg-slate-800">
+        4. Solutions
+      </button>
+      <button onclick="showPage(5)" id="tab-5" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white hover:bg-slate-800">
+        5. ICE Scores
+      </button>
+      <button onclick="showPage(6)" id="tab-6" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold transition text-slate-400 hover:text-white hover:bg-slate-800">
+        6. First Slice
+      </button>
+    </div>
+  </nav>
+
+  <!-- Container for Pages -->
+  <main class="max-w-6xl mx-auto space-y-8">
+
+    <!-- ================= PAGE 1: THE PROBLEM ================= -->
+    <article id="page-1" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 1</span>
+          <h2 class="text-2xl font-bold text-white mt-1">The Problem: Framing & Baseline Realities</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 1 of 6</span>
+      </div>
+
+      <!-- Context Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Institutional Clients</div>
+          <div class="text-2xl font-bold text-white mt-1">≈ 4,000</div>
+          <div class="text-[11px] text-indigo-400 mt-1">London · NY · Singapore</div>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Median Onboarding (TAT)</div>
+          <div class="text-2xl font-bold text-red-400 mt-1">62 Days</div>
+          <div class="text-[11px] text-slate-400 mt-1">Target is 30 Days</div>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Missed Requested Date</div>
+          <div class="text-2xl font-bold text-amber-400 mt-1">23%</div>
+          <div class="text-[11px] text-slate-400 mt-1">Delayed revenue & trading</div>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Quiet Abandonment</div>
+          <div class="text-2xl font-bold text-red-400 mt-1">7%</div>
+          <div class="text-[11px] text-red-400 mt-1">~35–40 mandates lost/yr</div>
+        </div>
+      </div>
+
+      <!-- Symptom vs Root Cause Comparison -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+        <div class="bg-red-950/20 border border-red-900/50 p-5 rounded-xl space-y-2">
+          <div class="text-xs font-bold text-red-400 uppercase tracking-wide">Sponsor's Initial Hypothesis (Symptom)</div>
+          <p class="text-sm text-slate-300 leading-relaxed italic">
+            "Automate KYC. The analysts are drowning, the front office is losing deals, and I have told the board we will show them something inside two quarters."
+          </p>
+          <div class="text-xs text-slate-400 pt-2 border-t border-red-900/40">
+            <strong>Assumption:</strong> "Automate KYC" is a solution in disguise. The COO assumes the entire end-to-end process needs autonomous AI.
+          </div>
+        </div>
+
+        <div class="bg-emerald-950/20 border border-emerald-900/50 p-5 rounded-xl space-y-2">
+          <div class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Discovered Operational Reality (Root Cause)</div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Active analysis takes only <strong>~14 hours</strong>. Over <strong>40 of the 62 days sit in Step 3 (CDD file build)</strong>, caused by finding gaps one at a time, 2–3 rounds of client outreach over 35+ days, and triaging 98% false-positive screening hits.
+          </p>
+          <div class="text-xs text-slate-400 pt-2 border-t border-emerald-900/40">
+            <strong>Regulatory Fact:</strong> MLRO and SMCR rules forbid automated risk ratings; Model Risk imposes 14 weeks on decision models.
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem Statement Banner -->
+      <div class="bg-gradient-to-r from-indigo-950 via-slate-900 to-blue-950 border border-indigo-800/80 p-6 rounded-xl space-y-3 shadow-lg">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></span>
+          <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">Virtusa FDE Problem Formulation Standard</span>
+        </div>
+        <p class="text-base md:text-lg font-medium text-white leading-relaxed">
+          <strong>Northgate's KYC analysts and Relationship Managers</strong> need <strong>to see every gap and complete ownership layer in a new client's file upfront on Day 2</strong> because <strong>gaps found piecemeal send the file back and forth 2 to 3 times over 35+ days during the CDD file build, pushing 23% of clients past their go-live date and causing 7% to abandon to competitors</strong>.
+        </p>
+        <div class="text-xs font-semibold text-emerald-400 pt-1">
+          ✓ Success Metric: Median time from signed mandate to first transaction drops from 62 days towards the 30-day target, and 80%+ of files require only a single, consolidated client outreach.
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ================= PAGE 2: EVIDENCE LOG TABLE ================= -->
+    <article id="page-2" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6 hidden">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 2</span>
+          <h2 class="text-2xl font-bold text-white mt-1">The Evidence Log: Seven-Stakeholder Discovery</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 2 of 6</span>
+      </div>
+
+      <p class="text-xs text-slate-400">
+        Evidence gathered across all seven Northgate role-players, classified rigorously by Fact, Assumption, Opinion, or Unknown with architectural implications.
+      </p>
+
+      <div class="overflow-x-auto border border-slate-800 rounded-xl">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead class="bg-slate-900 text-slate-300 border-b border-slate-800 uppercase font-semibold text-[11px]">
+            <tr>
+              <th class="p-3.5 w-1/4">What we heard or saw</th>
+              <th class="p-3.5 w-1/6">Who / Source</th>
+              <th class="p-3.5 w-1/6">Classification</th>
+              <th class="p-3.5 w-5/12">So what? (Implications)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-slate-300">
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">"Automate KYC... show the board something inside two quarters."</td>
+              <td class="p-3.5 text-indigo-400">Chief Operating Officer<br><span class="text-slate-500 text-[10px]">Sponsor</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold">OPINION / DESIRE</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Sponsor cares about lost revenue and board promises. Reframe from wholesale automation to an analyst co-pilot targeting cycle time.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">Median onboarding takes 62 days; 23% miss target date; 7% abandon quietly.</td>
+              <td class="p-3.5 text-indigo-400">Baseline Data & COO</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (MEASURED)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">7% abandonment = ~35–40 corporate mandates lost per year (£4M–£6M lost revenue). Slashing TAT directly protects franchise value.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">"Step 3: CDD File Build holds far more than 40 of the 62 days."</td>
+              <td class="p-3.5 text-indigo-400">Head of KYC Operations<br><span class="text-slate-500 text-[10px]">Sarah Jenkins</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (MEASURED)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed"><strong>The Epicenter of Delay.</strong> Other steps take 2–5 days each. Focus the First Slice entirely on Step 3; ignore core banking.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">"Files go back to the client 2 to 3 times because gaps are found one at a time."</td>
+              <td class="p-3.5 text-indigo-400">Head of KYC Ops & Elena<br><span class="text-slate-500 text-[10px]">Sr. Analyst</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (ROOT CAUSE)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Primary cause of 35+ days waiting. Solution must deliver: <strong>"See every gap at the start"</strong> to compile one consolidated request.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">"No model approves credit or assigns risk ratings. I hold personal SMCR liability."</td>
+              <td class="p-3.5 text-indigo-400">MLRO<br><span class="text-slate-500 text-[10px]">David Ross</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (MANDATE)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed"><strong>Hard Architectural Gate.</strong> Risk rating must be assigned by a human. The system must NEVER output a final risk rating (Pattern: <em>Never</em>).</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">98% of 12,000 monthly screening alerts are false positives; takes 10–25m each.</td>
+              <td class="p-3.5 text-indigo-400">MLRO & Elena (Analyst)</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (MEASURED)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Massive time sink. Opportunity for AI to <strong>Assist</strong> by clustering alerts and drafting clearance justifications for human confirmation.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">"Over my dead body will an AI system or bot send emails to my corporate clients!"</td>
+              <td class="p-3.5 text-indigo-400">Head of Coverage<br><span class="text-slate-500 text-[10px]">Mark Vance</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (VETO)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Direct client outreach belongs strictly to the bank. AI drafts the request (<em>Proposes</em>); <strong>Person Signs 2: Analyst/RM reviews and sends</strong>.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">Core banking is under a change freeze until Q3 2027; opens accounts in 2 AM batch.</td>
+              <td class="p-3.5 text-indigo-400">Enterprise Architect<br><span class="text-slate-500 text-[10px]">Priya Sharma</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (CONSTRAINT)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Do not touch core banking or promise instant account opening. The solution boundary stops at marking the file "Ready" in the KYC platform.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">KYC platform releases quarterly; integration queue is 6 weeks.</td>
+              <td class="p-3.5 text-indigo-400">Enterprise Architect</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (CONSTRAINT)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Do not propose core schema changes to the KYC platform. Save outputs as unsealed <strong>drafts against the case</strong> or lightweight workflow tasks.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">Bank has an Enterprise AI Gateway; registry rate limit is 50/min; screening priced/call.</td>
+              <td class="p-3.5 text-indigo-400">Enterprise Architect</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (ENABLER)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed"><strong>Conform to the Gateway.</strong> Passes security in &lt; 2 weeks. Must cache screening and registry calls to prevent cost spikes and API bans.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">"Anything that influences a risk outcome triggers a mandatory 14-week validation."</td>
+              <td class="p-3.5 text-indigo-400">Model Risk Lead<br><span class="text-slate-500 text-[10px]">Claire Bennett</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (GOVERNANCE)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">If AI makes decisions or calculates risk scores, it misses the board deadline. Keep outputs as <strong>drafts for human review</strong> to qualify for Tier 4 fast-track.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">Analysts spend half a day digging in unindexed 14-year on-premise archives.</td>
+              <td class="p-3.5 text-indigo-400">Senior KYC Analyst<br><span class="text-slate-500 text-[10px]">Elena Gomez</span></td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (MEASURED)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Implement semantic retrieval over the 14-year store (<em>Assist</em> pattern) to answer <em>"What did we ask for last time?"</em> with source citations.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-medium text-white">Analysts keep shadow desktop Excel trackers because KYC platform lacks draft workspace.</td>
+              <td class="p-3.5 text-indigo-400">Senior KYC Analyst</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (WORKAROUND)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Providing a draft workspace directly aligns with how analysts actually work, eliminating unmanaged desktop spreadsheets.</td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-medium text-white">"Nobody has ever sat down and asked to watch me build a file."</td>
+              <td class="p-3.5 text-indigo-400">Senior KYC Analyst</td>
+              <td class="p-3.5"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold">FACT (CULTURE)</span></td>
+              <td class="p-3.5 text-slate-300 leading-relaxed">Co-designing the workbench with Elena and the analysts turns them into enthusiastic champions, eliminating adoption failure.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+
+    <!-- ================= PAGE 3: OPPORTUNITIES TABLE ================= -->
+    <article id="page-3" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6 hidden">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 3</span>
+          <h2 class="text-2xl font-bold text-white mt-1">Opportunities Identification Table</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 3 of 6</span>
+      </div>
+
+      <p class="text-xs text-slate-400">
+        Translating discovered operational friction into high-value engineering opportunities across the corporate onboarding lifecycle.
+      </p>
+
+      <div class="overflow-x-auto border border-slate-800 rounded-xl">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead class="bg-slate-900 text-slate-300 border-b border-slate-800 uppercase font-semibold text-[11px]">
+            <tr>
+              <th class="p-3.5 w-1/12">ID</th>
+              <th class="p-3.5 w-1/4">Friction / Bottleneck Discovered</th>
+              <th class="p-3.5 w-1/3">Opportunity Statement</th>
+              <th class="p-3.5 w-1/6">Stakeholders</th>
+              <th class="p-3.5 w-1/4">Value Unlocked</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-slate-300">
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-indigo-400 font-mono">OPP-1</td>
+              <td class="p-3.5 font-medium text-white">
+                <strong>Manual Tree Drawing & Late UBOs:</strong> Analysts spend 5–10h drawing corporate trees in Visio from PDF filings; beneficial owners (&gt;25%) uncovered weeks late.
+              </td>
+              <td class="p-3.5 text-slate-200">
+                <strong>Multi-Tier Ownership & UBO Extraction:</strong> Ingest corporate registry filings (Companies House, KVK, ACRA) via AI Gateway to extract and draft the complete ownership tree down to UBOs on Day 1.
+              </td>
+              <td class="p-3.5 text-slate-400">Sarah Jenkins (Ops)<br>Elena Gomez (Analyst)</td>
+              <td class="p-3.5 text-emerald-400">
+                • Unrolls 3–5 tiers in minutes<br>
+                • Early UBO visibility<br>
+                • Saves 6–8h per complex case
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-bold text-indigo-400 font-mono">OPP-2</td>
+              <td class="p-3.5 font-medium text-white">
+                <strong>Piecemeal Outreach (2–3 Cycles):</strong> Files bounce 2–3 times over 35+ days because gaps are found one by one as each corporate tier is peeled; RMs blind.
+              </td>
+              <td class="p-3.5 text-slate-200">
+                <strong>"See Every Gap at the Start" Engine:</strong> Compare extracted corporate tree against policy to identify every gap on Day 2 and pre-draft a single, consolidated outreach email for RM review.
+              </td>
+              <td class="p-3.5 text-slate-400">Mark Vance (Coverage)<br>Sarah Jenkins (Ops)</td>
+              <td class="p-3.5 text-emerald-400">
+                • Outreach cycles: 3 → 1<br>
+                • Cuts client wait by 20+ days<br>
+                • Prevents 7% abandonment
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-indigo-400 font-mono">OPP-3</td>
+              <td class="p-3.5 font-medium text-white">
+                <strong>14-Year Archive Blindness:</strong> Analysts spend 4–6h digging through unindexed network archives (`\\london-fs02\`) for prior group files, often re-requesting docs already held.
+              </td>
+              <td class="p-3.5 text-slate-200">
+                <strong>Semantic Archive Retrieval Co-Pilot:</strong> Semantic retrieval service over 14-year on-premises store & CRM to answer <em>"What did we ask this client for last time?"</em> with clickable source citations.
+              </td>
+              <td class="p-3.5 text-slate-400">Elena Gomez (Analyst)<br>Mark Vance (Coverage)</td>
+              <td class="p-3.5 text-emerald-400">
+                • Stops asking for held files<br>
+                • Saves 4+ hours per case<br>
+                • Retains institutional memory
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 font-bold text-indigo-400 font-mono">OPP-4</td>
+              <td class="p-3.5 font-medium text-white">
+                <strong>Screening Alert Overload (98% False):</strong> Analysts spend 1–2 days per file manually writing clearance rationales for 40–80 fuzzy hits across 12,000 monthly alerts.
+              </td>
+              <td class="p-3.5 text-slate-200">
+                <strong>Screening Triage & Justification Drafter:</strong> AI Gateway module that clusters name matches, checks against passport/registry proof, and drafts clearance rationales for human confirmation.
+              </td>
+              <td class="p-3.5 text-slate-400">David Ross (MLRO)<br>Elena Gomez (Analyst)</td>
+              <td class="p-3.5 text-emerald-400">
+                • 70% faster alert triage<br>
+                • Saves 15–20h per file<br>
+                • Standardized audit lineage
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 font-bold text-indigo-400 font-mono">OPP-5</td>
+              <td class="p-3.5 font-medium text-white">
+                <strong>Shadow Excel Sheets & QA Rework:</strong> Analysts maintain personal desktop sheets because KYC platform has no draft mode; QA returns 25% of files for technical defects.
+              </td>
+              <td class="p-3.5 text-slate-200">
+                <strong>Integrated Draft Workspace & QA Pre-Flight:</strong> Provide a draft workspace saving unsealed drafts against the case, with an automated policy validator (checking 90-day utility limits, etc.) before submission.
+              </td>
+              <td class="p-3.5 text-slate-400">Sarah Jenkins (Ops)<br>Claire Bennett (Model Risk)</td>
+              <td class="p-3.5 text-emerald-400">
+                • Eliminates shadow Excel<br>
+                • QA returns: 25% → &lt; 5%<br>
+                • Bypasses 14-wk model risk
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+
+    <!-- ================= PAGE 4: SOLUTIONS & ARCHITECTURE ================= -->
+    <article id="page-4" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6 hidden">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 4</span>
+          <h2 class="text-2xl font-bold text-white mt-1">Solutions & Architecture Choices</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 4 of 6</span>
+      </div>
+
+      <!-- Evaluated Solutions Summary -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Evaluated Solution Options</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="text-xs font-bold text-red-400">Sol 1: Autonomous "KYC Autopilot"</div>
+            <p class="text-xs text-slate-400">Autonomous STP agent doing KYC and emailing clients. <strong>Rejected:</strong> Vetoed by MLRO (SMCR), Coverage (no AI emails), and Model Risk.</p>
+          </div>
+          <div class="bg-slate-900 border border-indigo-900/60 p-4 rounded-xl space-y-2 bg-indigo-950/20">
+            <div class="text-xs font-bold text-indigo-400">Sol 3: Northgate KYC Co-Pilot (Target)</div>
+            <p class="text-xs text-slate-300">Extraction + 1-shot gap list + archive search + alert triage. <strong>Recommended First Slice (ADR-001).</strong></p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2">
+            <div class="text-xs font-bold text-amber-400">Sol 4: Core Banking / KYC Replacement</div>
+            <p class="text-xs text-slate-400">Rip-and-replace core mainframe and KYC vendor. <strong>Rejected:</strong> Core banking freeze until Q3 2027; misses board deadline.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architecture Choices Table -->
+      <div class="space-y-2 pt-2">
+        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Architecture Choices: Right Tool per Step</h3>
+        <div class="overflow-x-auto border border-slate-800 rounded-xl">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-900 text-slate-300 border-b border-slate-800 uppercase font-semibold text-[11px]">
+              <tr>
+                <th class="p-3 w-1/4">Workflow Step</th>
+                <th class="p-3 w-1/4">Technology Selected</th>
+                <th class="p-3 w-1/2">Autonomy Level & Regulatory Justification</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr class="hover:bg-slate-900/50">
+                <td class="p-3 font-semibold text-white">1. Gather Filings & Prior Files</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800 font-mono text-[10px]">Python via AI Gateway</span></td>
+                <td class="p-3 text-slate-400"><strong>ACTS, WITH CHECKS.</strong> Reads registry feeds and document store; token bucket strictly enforces 50 calls/min rate limit.</td>
+              </tr>
+              <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+                <td class="p-3 font-semibold text-white">2. Extract Ownership Chain & UBOs</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono text-[10px]">LLM via AI Gateway</span></td>
+                <td class="p-3 text-slate-400"><strong>PROPOSES.</strong> Reads articles and registry data to draft the ownership tree. Analyst verifies against source documents.</td>
+              </tr>
+              <tr class="hover:bg-slate-900/50">
+                <td class="p-3 font-semibold text-white">3. Build Unified Gap List</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono text-[10px]">Deterministic Policy Rules</span></td>
+                <td class="p-3 text-slate-400"><strong>PROPOSES.</strong> Cross-references UBOs against Policy Sec 6; pre-drafts 1 complete outreach email. <strong>Person Signs 2: Analyst/RM sends.</strong></td>
+              </tr>
+              <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+                <td class="p-3 font-semibold text-white">4. Triage Screening Alerts</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 font-mono text-[10px]">LLM via AI Gateway</span></td>
+                <td class="p-3 text-slate-400"><strong>ASSISTS.</strong> Groups fuzzy hits, pre-drafts discount rationales from passport evidence. <strong>Person Signs 1: Analyst confirms each hit.</strong></td>
+              </tr>
+              <tr class="hover:bg-slate-900/50">
+                <td class="p-3 font-semibold text-white">5. Assign Risk Rating</td>
+                <td class="p-3"><span class="px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-mono text-[10px]">Human Officer (MLRO)</span></td>
+                <td class="p-3 text-slate-400"><strong>NEVER AUTOMATED. Person Signs 3:</strong> Senior KYC Manager / MLRO signs risk rating. Bypasses 14-week Model Risk validation.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Estate Strategy Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+        <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5">
+          <div class="text-xs font-bold text-white flex items-center gap-2">
+            <span class="text-indigo-400">1. EXTEND</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            KYC Platform remains official record of truth. Workflow platform starts work. Document store (14 yrs) and CRM are read, not copied.
+          </p>
+        </div>
+        <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5">
+          <div class="text-xs font-bold text-white flex items-center gap-2">
+            <span class="text-blue-400">2. CONFORM</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            All AI traffic passes through centralized AI Gateway. Caches registry & screening calls. Zero changes to core banking mainframe.
+          </p>
+        </div>
+        <div class="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5">
+          <div class="text-xs font-bold text-white flex items-center gap-2">
+            <span class="text-emerald-400">3. PROPOSE</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Only ONE new microservice: gathers filings, extracts ownership, and builds the gap list. Requires gateway sign-off for its tools.
+          </p>
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ================= PAGE 5: ICE SCORING TABLE ================= -->
+    <article id="page-5" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6 hidden">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 5</span>
+          <h2 class="text-2xl font-bold text-white mt-1">ICE Scoring & Prioritization</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 5 of 6</span>
+      </div>
+
+      <p class="text-xs text-slate-400">
+        Systematic prioritization of candidate solutions using the ICE framework: 
+        <strong class="text-slate-200">Impact</strong> (cycle time & abandonment reduction), 
+        <strong class="text-slate-200">Confidence</strong> (regulatory compliance & stakeholder consensus), and 
+        <strong class="text-slate-200">Ease</strong> (speed to delivery inside the COO's two-quarter deadline).
+      </p>
+
+      <div class="overflow-x-auto border border-slate-800 rounded-xl">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead class="bg-slate-900 text-slate-300 border-b border-slate-800 uppercase font-semibold text-[11px]">
+            <tr>
+              <th class="p-3.5 w-1/12 text-center">Rank</th>
+              <th class="p-3.5 w-1/3">Candidate Solution</th>
+              <th class="p-3.5 text-center">Impact (1–10)</th>
+              <th class="p-3.5 text-center">Confidence (1–10)</th>
+              <th class="p-3.5 text-center">Ease (1–10)</th>
+              <th class="p-3.5 text-center font-bold text-indigo-400">ICE Score (I×C×E)</th>
+              <th class="p-3.5 w-1/4">Decision & Rationale</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-slate-300">
+            <tr class="hover:bg-slate-900/50 bg-indigo-950/20 border-l-4 border-indigo-500">
+              <td class="p-3.5 text-center font-bold text-indigo-400 text-sm">1</td>
+              <td class="p-3.5 font-bold text-white">
+                Solution 3: Northgate KYC Co-Pilot<br>
+                <span class="text-[11px] font-normal text-slate-400">(Extraction + 1-Shot Gap List + Archive Search + Alert Triage)</span>
+              </td>
+              <td class="p-3.5 text-center font-semibold text-emerald-400">9</td>
+              <td class="p-3.5 text-center font-semibold text-emerald-400">9</td>
+              <td class="p-3.5 text-center font-semibold text-emerald-400">8</td>
+              <td class="p-3.5 text-center font-black text-xl text-indigo-300 font-mono">648</td>
+              <td class="p-3.5 text-emerald-400 font-medium">
+                <strong>SELECTED (First Slice).</strong> Attacks the 40-day CDD build, eliminates piecemeal outreach, keeps human sign-offs, ready in 6 weeks.
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 text-center font-bold text-slate-400 text-sm">2</td>
+              <td class="p-3.5 font-medium text-slate-200">
+                Solution 2: Client Portal Checklists & Gating
+              </td>
+              <td class="p-3.5 text-center text-slate-300">6</td>
+              <td class="p-3.5 text-center text-slate-300">7</td>
+              <td class="p-3.5 text-center text-slate-300">8</td>
+              <td class="p-3.5 text-center font-bold text-slate-300 font-mono">336</td>
+              <td class="p-3.5 text-slate-400">
+                Easy to build, but fails to untangle complex offshore trees; leaves analyst manual spreading untouched.
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 text-center font-bold text-slate-400 text-sm">3</td>
+              <td class="p-3.5 font-medium text-slate-200">
+                Solution 5: Post-Onboarding Perpetual KYC (pKYC)
+              </td>
+              <td class="p-3.5 text-center text-slate-300">7</td>
+              <td class="p-3.5 text-center text-slate-300">8</td>
+              <td class="p-3.5 text-center text-slate-300">4</td>
+              <td class="p-3.5 text-center font-bold text-slate-300 font-mono">224</td>
+              <td class="p-3.5 text-slate-400">
+                High value for ongoing compliance, but high integration complexity; does not fix acute 62-day onboarding delay. <em>Phase 2.</em>
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50">
+              <td class="p-3.5 text-center font-bold text-slate-400 text-sm">4</td>
+              <td class="p-3.5 font-medium text-slate-200">
+                Solution 1: Autonomous "KYC Autopilot" (STP)
+              </td>
+              <td class="p-3.5 text-center text-slate-300">9</td>
+              <td class="p-3.5 text-center text-red-400">2</td>
+              <td class="p-3.5 text-center text-slate-300">4</td>
+              <td class="p-3.5 text-center font-bold text-red-400 font-mono">72</td>
+              <td class="p-3.5 text-red-400">
+                <strong>DISQUALIFIED.</strong> Vetoed by MLRO (SMCR), Coverage (no AI emails), and Model Risk (unacceptable drift risk).
+              </td>
+            </tr>
+            <tr class="hover:bg-slate-900/50 bg-slate-900/20">
+              <td class="p-3.5 text-center font-bold text-slate-400 text-sm">5</td>
+              <td class="p-3.5 font-medium text-slate-200">
+                Solution 4: Core Banking & KYC Platform Replacement
+              </td>
+              <td class="p-3.5 text-center text-slate-300">8</td>
+              <td class="p-3.5 text-center text-slate-300">5</td>
+              <td class="p-3.5 text-center text-red-400">1</td>
+              <td class="p-3.5 text-center font-bold text-red-400 font-mono">40</td>
+              <td class="p-3.5 text-red-400">
+                <strong>DISQUALIFIED.</strong> Core banking change freeze until Q3 2027; 18-month cycle misses two-quarter board commitment.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Winning Solution Rationale -->
+      <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-2">
+        <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wide">Why Solution 3 Dominates the ICE Matrix</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Solution 3 achieves an industry-leading score of <strong>648</strong> by surgically attacking the CDD file build—which holds >40 of the 62 days. It secures 9/10 confidence because all seven stakeholders enthusiastically support its non-invasive, human-in-the-loop design; and it earns 8/10 ease by conforming to the existing AI Gateway and saving unsealed drafts into the KYC platform without requiring core banking or COTS schema changes.
+        </p>
+      </div>
+    </article>
+
+
+    <!-- ================= PAGE 6: THE FIRST SLICE ================= -->
+    <article id="page-6" class="page-card bg-slate-950 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl space-y-6 hidden">
+      <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Section 6</span>
+          <h2 class="text-2xl font-bold text-white mt-1">The First Slice & Roadmap (ADR-001)</h2>
+        </div>
+        <span class="bg-indigo-950 border border-indigo-800 text-indigo-300 text-xs px-3 py-1 rounded-full font-medium">Page 6 of 6</span>
+      </div>
+
+      <!-- First Slice Boundary Box -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-5 bg-indigo-950/20 border border-indigo-800/60 rounded-xl space-y-3">
+          <div class="text-xs font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-1.5">
+            <span>✔</span> What is IN the First Slice (4–6 Weeks)
+          </div>
+          <ul class="text-xs text-slate-300 space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-400 font-bold">•</span>
+              <span><strong>Geographic Scope:</strong> London and New York commercial corporate files.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-400 font-bold">•</span>
+              <span><strong>Document Scope:</strong> Registry extracts (Companies House, KVK, ACRA) + Articles + Passports.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-400 font-bold">•</span>
+              <span><strong>Target Users:</strong> 10 Pilot Analysts (led by Elena Gomez) & 3 KYC Managers.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-indigo-400 font-bold">•</span>
+              <span><strong>Core Modules:</strong> Automated UBO tree draft + 1-shot gap list + 14-yr archive search + alert triage.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-3">
+          <div class="text-xs font-bold text-slate-400 uppercase tracking-wide flex items-center gap-1.5">
+            <span>✖</span> What is LEFT OUT (Deferred)
+          </div>
+          <ul class="text-xs text-slate-400 space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="text-slate-600 font-bold">•</span>
+              <span><strong>Singapore Complex Trusts:</strong> Excludes cross-border multi-tier Asian trusts (&gt;5 tiers).</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-slate-600 font-bold">•</span>
+              <span><strong>Autonomous Decisions:</strong> System NEVER assigns risk rating; human officer signs.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-slate-600 font-bold">•</span>
+              <span><strong>Client Messaging:</strong> System NEVER emails clients directly; RM/analyst reviews & sends.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-slate-600 font-bold">•</span>
+              <span><strong>Core Banking Edits:</strong> Zero changes to mainframe overnight batch processing.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Architecture Decision Record (ADR-001) Box -->
+      <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-2 font-sans">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <span class="text-xs font-bold text-indigo-400 font-mono">ADR-001 · First slice writes drafts only; a person signs every decision</span>
+          <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded font-bold uppercase">Two-Way Door</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed pt-1">
+          <strong>Decision:</strong> A new service gathers filings, extracts the ownership chain, and builds one complete gap list through the bank's AI Gateway. Its output is saved as unsealed DRAFTS against the case in the KYC platform. An analyst confirms every fact and sends the client one request. A person assigns the risk rating. No new data store; no change to core banking.
+        </p>
+        <div class="text-[11px] text-slate-400 pt-1">
+          <strong>Revisit If:</strong> Model Risk classifies drafts as influencing a risk outcome; or analysts reject &gt; 1 in 5 drafted chains; or screening/registry costs exceed monthly budget.
+        </div>
+      </div>
+
+      <!-- 4 to 6 Week Execution Roadmap -->
+      <div class="space-y-2">
+        <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wide">4-to-6 Week Execution Roadmap (Results Inside Two Quarters)</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-1.5">
+            <div class="text-[11px] font-bold text-indigo-400">WEEK 1: Foundation</div>
+            <div class="font-semibold text-white">Gateway & Tier 4 Gate</div>
+            <p class="text-[11px] text-slate-400">Submit AI Gateway service account request; confirm Tier 4 Model Risk exemption with Claire; ingest 30 sample files.</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-1.5">
+            <div class="text-[11px] font-bold text-indigo-400">WEEKS 2–3: Build</div>
+            <div class="font-semibold text-white">Extraction & Gap Engine</div>
+            <p class="text-[11px] text-slate-400">Configure LLM registry extraction; build deterministic gap detector; connect semantic retrieval over 14-yr archive.</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-1.5">
+            <div class="text-[11px] font-bold text-indigo-400">WEEK 4: Hardening</div>
+            <div class="font-semibold text-white">Security & Co-Design</div>
+            <p class="text-[11px] text-slate-400">Pass InfoSec VAPT; test 50/min registry rate limiter; conduct hands-on training with Elena and 10 pilot analysts.</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl space-y-1.5">
+            <div class="text-[11px] font-bold text-emerald-400">WEEKS 5–6: Live Pilot</div>
+            <div class="font-semibold text-white">Measure & Board Pack</div>
+            <p class="text-[11px] text-slate-400">Process 40 live corporate files; verify outreach drops from 2.8 to 1.0; deliver live operational proof for COO Board review.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stakeholder Consensus Bar -->
+      <div class="p-4 bg-gradient-to-r from-slate-900 to-indigo-950 border border-indigo-900 rounded-xl flex flex-col md:flex-row justify-between items-center gap-3">
+        <div class="text-xs text-slate-200">
+          <strong>Full Stakeholder Consensus Achieved:</strong> COO gets 30-day proof; Sarah eliminates Visio drawing; David retains SMCR risk control; Mark prevents client churn; Priya avoids core banking changes; Claire signs Tier 4 exemption; Elena eliminates manual archive hunts.
+        </div>
+        <span class="px-3 py-1 bg-emerald-950 border border-emerald-800 text-emerald-300 text-xs rounded-full font-bold whitespace-nowrap">
+          Ready for Guide Sign-Off
+        </span>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Script for Navigation & Page Switcher -->
+  <script>
+    let isAllView = false;
+
+    function showPage(pageNumber) {
+      isAllView = false;
+      document.getElementById('btn-toggle-all').innerText = "View All 6 Pages";
+      document.querySelectorAll('.page-card').forEach(page => {
+        page.classList.add('hidden');
+      });
+
+      const target = document.getElementById('page-' + pageNumber);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+        btn.classList.add('text-slate-400', 'hover:text-white', 'hover:bg-slate-800');
+      });
+
+      const activeTab = document.getElementById('tab-' + pageNumber);
+      if (activeTab) {
+        activeTab.classList.remove('text-slate-400', 'hover:text-white', 'hover:bg-slate-800');
+        activeTab.classList.add('bg-indigo-600', 'text-white', 'shadow');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleAllPages() {
+      isAllView = !isAllView;
+      const btn = document.getElementById('btn-toggle-all');
+      
+      if (isAllView) {
+        document.querySelectorAll('.page-card').forEach(page => page.classList.remove('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+          btn.classList.add('text-slate-400');
+        });
+        btn.innerText = "Single Page View";
+      } else {
+        showPage(1);
+      }
+    }
+  </script>
+</body>
+</html>
